@@ -5,14 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.control.*;
-import java.lang.reflect.Type;
-import java.time.format.DateTimeFormatter;
-import java.io.File;
-import java.util.*;
-import java.time.LocalDateTime;
-import javafx.event.ActionEvent;
 
-import javax.swing.text.View;
+import java.util.*;
+
+import javafx.event.ActionEvent;
 
 public class  ProjectController {
     ArrayList<Reservation> Reservations = new ArrayList<>();
@@ -26,6 +22,19 @@ public class  ProjectController {
     @FXML
     private ImageView AccountIcon;
 
+
+    @FXML
+    private TextField CurrentParticipantsInput;
+    @FXML
+    private TextField RequiredParticipantsInput;
+    @FXML
+    private Label CurrentParticipantsLabel;
+    @FXML
+    private Label RequiredParticipantsLabel;
+    @FXML
+    private Label EventNameLabel;
+    @FXML
+    private TextField EventNameInput;
     @FXML
     private HBox AdminButtonsHbox;
 
@@ -114,10 +123,6 @@ public class  ProjectController {
 
     @FXML
     private Label RequiredParticipants;
-    @FXML
-    private Label EventNameLabel;
-    @FXML
-    private TextField EventNameInput;
 
     @FXML
     private TextField RoomIDInput;
@@ -495,7 +500,7 @@ public class  ProjectController {
     }
     ArrayList<Reservation.Event> events = new ArrayList<>();
     public void addEvent() {
-        Reservation.Event newEvent = new Reservation.Event(i, "test", RoomIDInput.getText(), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText(),"test", 5, Integer.parseInt(ParticipantsInput.getText()));
+        Reservation.Event newEvent = new Reservation.Event(i, "test", RoomIDInput.getText(), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText(),EventNameInput.getText(), Integer.parseInt(RequiredParticipantsInput.getText()), Integer.parseInt(CurrentParticipantsInput.getText()));
         events.add(newEvent);
     }
 }

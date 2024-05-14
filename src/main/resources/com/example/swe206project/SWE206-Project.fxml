@@ -19,9 +19,10 @@
    <children>
       <AnchorPane prefHeight="700.0" prefWidth="900.0">
          <children>
-            <HBox fx:id="MenuBar" alignment="CENTER" prefHeight="50.0" prefWidth="902.0" style="-fx-background-color: #008540; -fx-spacing: 20;">
+            <HBox fx:id="MenuBar" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="902.0" style="-fx-background-color: #008540; -fx-spacing: 20;">
                <children>
-                  <ImageView fitHeight="33.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label prefHeight="18.0" prefWidth="37.0" />
+                  <Label fx:id="UsernameLabel" prefHeight="18.0" prefWidth="106.0" textFill="WHITE" />
                   <StackPane alignment="BOTTOM_CENTER" prefHeight="22.0" prefWidth="26.0">
                      <children>
                         <ImageView fx:id="KfupmIcon" fitHeight="50.0" fitWidth="50.0">
