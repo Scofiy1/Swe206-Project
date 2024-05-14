@@ -31,7 +31,8 @@ public class  ProjectController {
 
     @FXML
     private Label AlreadyRegisteredLabel;
-
+    @FXML
+    private Label UsernameLabel;
     @FXML
     private HBox ButtonsHbox;
 
@@ -111,10 +112,17 @@ public class  ProjectController {
     @FXML
     private Label ReservationErrorInfoLabel;
 
+
+    @FXML
+    private Label RequiredParticipants;
+    @FXML
+    private Label EventNameLabel;
+    @FXML
+    private TextField EventNameInput;
+
     @FXML
     private TextField RoomIDInput;
-    @FXML
-    private TextField ParticipantsInput;
+
     @FXML
     private TextField DateInput;
     @FXML
@@ -202,9 +210,14 @@ public class  ProjectController {
 
     @FXML
     void HomeButtonClick(ActionEvent event) {
+        if (getUserType(UsernameLabel.getText()).equals("Admin")){
+            AdminHomepage();
+            clearInputs();
+        }
+        else {
         Homepage();
         clearInputs();
-    }
+    }}
 
     @FXML
     void AccountButtonClick(ActionEvent event) {
@@ -217,12 +230,26 @@ public class  ProjectController {
     void KfupmButtonClick(ActionEvent event) {
 
     }
-
     @FXML
     void RegisterButtonClick(ActionEvent event) {
-        Homepage();
-        addUser();
-        WelcomeLabel.setText(users1.toString());
+        if (LoginLabel.getText().equals("Login!")){
+            if(checkRegisterInfo()){
+                addUser();
+                UsernameLabel.setText(UsernameInput.getText());
+                Homepage();}
+            else
+                RegisterErrorLabel.setText("Error Please fill all requested information");
+        }
+        else
+        if (checkForLogin(UsernameInput.getText(),PasswordInput.getText()))
+        { UsernameLabel.setText(UsernameInput.getText());
+
+            Homepage();
+
+        }
+        else
+            RegisterErrorLabel.setText("Error Username and Password dont match");
+
     }
 
     @FXML
@@ -359,6 +386,10 @@ public class  ProjectController {
         JoinEventPage.setVisible(false);
         ViewEventsPage.setVisible(false);
     }
+    void AdminHomepage(){
+        Homepage();
+        AdminButtonsHbox.setVisible(true);
+    }
 
     void HideHomepage() {
         ImagesHbox.setVisible(false);
@@ -381,10 +412,10 @@ public class  ProjectController {
         DateInput.clear();
         StartTimeInput.clear();
         EndTimeInput.clear();
-        ParticipantsInput.clear();
+
         RoomIDInput.clear();
 
-
+        EventNameInput.clear();
     }
 
     public boolean findReservation(Reservation Res) {
@@ -416,6 +447,20 @@ public class  ProjectController {
         SportCourt.setImage(image8);
 
     }
+    public boolean checkRegisterInfo() {
+        if (isEmpty(UsernameInput) || isEmpty(EmailInput) || isEmpty(PasswordInput)) {
+            return false;
+        }
+        if (!rMale.isSelected() && !rFemale.isSelected()) {
+            return false;
+        }
+        if (!rFaculty.isSelected() && !rStaff.isSelected() && !rStudent.isSelected()) {
+            return false;}
+        return true;
+    }
+        private boolean isEmpty(TextField textField) {
+            return textField.getText() == null || textField.getText().trim().isEmpty();
+        }
 
     ArrayList<User> users1 = new ArrayList<>();
 
@@ -432,8 +477,16 @@ public class  ProjectController {
         }
         return false;
     }
+    public String getUserType(String username) {
+        for (User user : users1) {
+            if (user.getUserName().equals(username)) {
+                return user.getType();}}
+        return null;
+    }
 
-    ArrayList<Reservation> reservations = new ArrayList<>();
+
+                ArrayList<Reservation> reservations = new ArrayList<>();
+
 
     public void addReservation() {
 

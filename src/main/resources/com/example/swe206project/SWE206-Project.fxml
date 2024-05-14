@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
@@ -17,11 +16,12 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.swe206project.ProjectController">
    <children>
-      <AnchorPane prefHeight="700.0" prefWidth="900.0">
+      <AnchorPane fx:id="CurrentParticipantsLabel" prefHeight="700.0" prefWidth="900.0">
          <children>
-            <HBox fx:id="MenuBar" alignment="CENTER" prefHeight="50.0" prefWidth="902.0" style="-fx-background-color: #008540; -fx-spacing: 20;">
+            <HBox fx:id="MenuBar" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="902.0" style="-fx-background-color: #008540; -fx-spacing: 20;">
                <children>
-                  <ImageView fitHeight="33.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label prefHeight="18.0" prefWidth="48.0" textFill="WHITE" />
+                  <Label fx:id="UsernameLabel" alignment="CENTER" prefHeight="18.0" prefWidth="106.0" textFill="WHITE" />
                   <StackPane alignment="BOTTOM_CENTER" prefHeight="22.0" prefWidth="26.0">
                      <children>
                         <ImageView fx:id="KfupmIcon" fitHeight="50.0" fitWidth="50.0">
@@ -309,17 +309,18 @@
                      <children>
                         <Label text="Reservation Reason" />
                         <TextField fx:id="ReservationReasonInput" prefHeight="26.0" prefWidth="274.0" />
-                        <Label text="             Date" />
-                        <TextField fx:id="DateInput" />
+                        <Label fx:id="EventNameLabel" text="  Event Name" />
+                        <TextField fx:id="EventNameInput" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" layoutX="-2.0" layoutY="152.0" prefHeight="50.0" prefWidth="707.0" style="-fx-spacing: 10;">
                      <children>
+                        <Label text="             Date" />
+                        <TextField fx:id="DateInput" promptText="DD/MM/YYYY" />
                         <Label text="Start Time" />
-                        <TextField fx:id="StartTimeInput" />
-                        <Separator prefHeight="12.0" prefWidth="79.0" visible="false" />
+                        <TextField fx:id="StartTimeInput" promptText="00:00" />
                         <Label text="End Time" />
-                        <TextField fx:id="EndTimeInput" />
+                        <TextField fx:id="EndTimeInput" promptText="00:00" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" layoutY="50.0" prefHeight="50.0" prefWidth="707.0">
@@ -335,11 +336,12 @@
                   </HBox>
                   <HBox alignment="CENTER" layoutY="210.0" prefHeight="50.0" prefWidth="707.0" style="-fx-spacing: 10;">
                      <children>
-                        <Label text="Participants" />
-                        <TextField fx:id="ParticipantsInput" prefHeight="26.0" prefWidth="62.0" />
-                        <Separator prefHeight="12.0" prefWidth="163.0" visible="false" />
+                        <Label fx:id="CurrentParticipantsLabel" text="Current Participants" />
+                        <TextField fx:id="CurrentParticipantsInput" prefHeight="26.0" prefWidth="55.0" />
+                        <Label fx:id="RequiredParticipants" text="Requierd Participants" />
+                        <TextField fx:id="RequiredParticipantsInput" prefHeight="26.0" prefWidth="55.0" />
                         <Label fx:id="RoomIDLabel" text="Room ID" />
-                        <TextField fx:id="RoomIDInput" prefHeight="26.0" prefWidth="62.0" />
+                        <TextField fx:id="RoomIDInput" prefHeight="26.0" prefWidth="55.0" />
                      </children>
                   </HBox>
                </children>
