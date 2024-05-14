@@ -371,6 +371,7 @@ public class  ProjectController {
         PasswordInput.clear();
         EmailInput.clear();
         clearRadioButtons();
+
     }
 
     void Homepage() {
@@ -385,6 +386,7 @@ public class  ProjectController {
         SuccessLabel.setVisible(false);
         JoinEventPage.setVisible(false);
         ViewEventsPage.setVisible(false);
+
     }
     void AdminHomepage(){
         Homepage();
@@ -482,19 +484,5 @@ public class  ProjectController {
             if (user.getUserName().equals(username)) {
                 return user.getType();}}
         return null;
-    }
-
-
-                ArrayList<Reservation> reservations = new ArrayList<>();
-
-
-    public void addReservation() {
-
-    }
-
-    ArrayList<Reservation.Event> events = new ArrayList<>();
-
-    public void addEvent() {
-    }
-}
+    }}
 
