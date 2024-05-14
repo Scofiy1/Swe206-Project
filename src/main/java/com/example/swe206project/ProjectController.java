@@ -13,6 +13,8 @@ import javafx.event.ActionEvent;
 public class  ProjectController {
     ArrayList<Reservation> Reservations = new ArrayList<>();
     private boolean reservationEventClicked = false;
+    private boolean isAdmin = false;
+    private String Building = "";
     @FXML
     private Button AccountButton;
     @FXML
@@ -160,9 +162,16 @@ public class  ProjectController {
     private AnchorPane ViewEventsPage;
 
     @FXML
+    private TextField JoinEventInput;
+
+    @FXML
     void JoinButtonClick(ActionEvent event) {
         SuccessLabel.setText("You have registered in an event!");
         JoinEventPage.setVisible(false);
+        if (isAdmin){
+            AdminHomepage();
+        }
+        else
         Homepage();
 
     }
@@ -216,13 +225,15 @@ public class  ProjectController {
 
     @FXML
     void HomeButtonClick(ActionEvent event) {
-        if (getUserType(UsernameLabel.getText()).equals("Admin")){
+        if (isAdmin){
             AdminHomepage();
             clearInputs();
+            ReservationErrorInfoLabel.setText("");
         }
         else {
         Homepage();
         clearInputs();
+        ReservationErrorInfoLabel.setText("");
     }}
 
     @FXML
@@ -247,12 +258,15 @@ public class  ProjectController {
                 RegisterErrorLabel.setText("Error Please fill all requested information");
         }
         else
-        if (checkForLogin(UsernameInput.getText(),PasswordInput.getText()))
-        { UsernameLabel.setText(UsernameInput.getText());
-
+        if (checkForLogin(UsernameInput.getText(),PasswordInput.getText())) {
+            UsernameLabel.setText(UsernameInput.getText());
             Homepage();
+            isAdmin= false;
+        }else if (checkForAdmin(UsernameInput.getText(),PasswordInput.getText())){
+                AdminHomepage();
+                isAdmin = true;
+            }
 
-        }
         else
             RegisterErrorLabel.setText("Error Username and Password dont match");
 
@@ -269,9 +283,32 @@ public class  ProjectController {
 
     @FXML
     void ConfirmButtonClick(ActionEvent event) {
-        Homepage();
-        SuccessLabel.setVisible(true);
-        clearInputs();
+        if (reservationEventClicked){
+            if(checkReservationInfo()){
+                if (isAdmin){
+                    AdminHomepage();
+                }
+                else
+                { Homepage();}
+                SuccessLabel.setVisible(true);
+                clearInputs();
+                ReservationErrorInfoLabel.setText("");
+            }
+            else {ReservationErrorInfoLabel.setText("Error Please fill all information");}
+        }
+        else {if(checkEventInfo())
+            {if (isAdmin){
+                AdminHomepage();
+            }
+            else
+            { Homepage();}
+                SuccessLabel.setVisible(true);
+                clearInputs();
+                ReservationErrorInfoLabel.setText("");}
+         else {ReservationErrorInfoLabel.setText("Error Please fill all information");}
+        }
+
+
 
     }
 
@@ -280,6 +317,7 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        Building = "Classroom";
         if (reservationEventClicked){
         hide();
         }
@@ -293,6 +331,7 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        Building = "ComputerLab";
         if (reservationEventClicked){
             hide();
         }
@@ -306,6 +345,7 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        Building = "SportCourt";
         if (reservationEventClicked){
             hide();
         }
@@ -319,6 +359,7 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        Building = "Gym";
         if (reservationEventClicked){
             hide();
         }
@@ -332,6 +373,7 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        Building = "SwimmingPool";
         if (reservationEventClicked){
             hide();
         }
@@ -541,6 +583,16 @@ public class  ProjectController {
 
 
     }
+    public boolean checkEventInfo() {
+        if (isEmpty(RequiredParticipantsInput) || isEmpty(CurrentParticipantsInput) || isEmpty(ReservationReasonInput)
+                || isEmpty(DateInput) || isEmpty(StartTimeInput) || isEmpty(EndTimeInput) || isEmpty(EventNameInput) || isEmpty(RoomIDInput)) {
+            return false;}
+            return true;}
+    public boolean checkReservationInfo() {
+        if (isEmpty(ReservationReasonInput)  || isEmpty(DateInput) || isEmpty(StartTimeInput) || isEmpty(EndTimeInput)
+                || isEmpty(RoomIDInput)) {
+            return false;}
+        return true;}
     public boolean checkRegisterInfo() {
         if (isEmpty(UsernameInput) || isEmpty(EmailInput) || isEmpty(PasswordInput)) {
             return false;
@@ -555,7 +607,9 @@ public class  ProjectController {
         private boolean isEmpty(TextField textField) {
             return textField.getText() == null || textField.getText().trim().isEmpty();
         }
-
+    public boolean isAdmin(User user) {
+        return user instanceof Admin;
+    }
 
 
     ArrayList<User> users1 = new ArrayList<>();
@@ -570,6 +624,8 @@ public class  ProjectController {
                 return user.getPassword().equals(password);
             }
         }
+        return false;}
+    public boolean checkForAdmin(String username, String password) {
         for(Admin admin:admins){
             if(admin.getUserName().equals(username)){
                 return admin.getPassword().equals(password);
