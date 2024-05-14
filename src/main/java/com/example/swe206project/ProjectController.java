@@ -112,7 +112,6 @@ public class  ProjectController {
     @FXML
     private Label ReservationErrorInfoLabel;
 
-
     @FXML
     private Label RequiredParticipants;
     @FXML
@@ -354,6 +353,7 @@ public class  ProjectController {
         EmailInput.clear();
         AlreadyRegisteredLabel.setText("Already Registered?");
         clearRadioButtons();
+        RegisterErrorLabel.setText("");
     }
 
     void Login() {
@@ -370,6 +370,7 @@ public class  ProjectController {
         UsernameInput.clear();
         PasswordInput.clear();
         EmailInput.clear();
+        RegisterErrorLabel.setText("");
         clearRadioButtons();
 
     }
