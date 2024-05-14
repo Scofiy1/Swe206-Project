@@ -2,24 +2,22 @@ package com.example.swe206project;
 
 public class Facilities {
 
-    private String facilityID;
-    private String reservationID;
+    private int facilityID;
     private boolean isAvailable;
 
     private String gender;
+    private int capacity;
 
-    public Facilities(String facilityID, String reservationID, String gender) {
+    public Facilities(int facilityID, String gender, int capacity) {
         this.facilityID = facilityID;
-        this.reservationID = reservationID;
         this.gender = gender;
         isAvailable = true;
+        this.capacity = capacity;
     }
 
-    public String getFacilityID() {return facilityID;}
+    public int getFacilityID() {return facilityID;}
+    public int getCapacity(){return capacity;}
 
-    public String getReservationID() {
-        return reservationID;
-    }
 
     public boolean checkAvailability() {
         return isAvailable;
@@ -31,18 +29,18 @@ public class Facilities {
 class Gym extends Facilities {
 
 
-    public Gym(String facilityID, String reservationID, String gender) {
-        super(facilityID, reservationID, gender);
+    public Gym(int facilityID, String gender, int capacity) {
+        super(facilityID, gender, capacity);
     }}
 class SportCourt extends Facilities {
 
 
-    public SportCourt(String facilityID, String reservationID, String gender) {
-        super(facilityID, reservationID, gender);
+    public SportCourt(int facilityID, String gender, int capacity) {
+        super(facilityID, gender, capacity);
     }}
 class SwimmingPool extends Facilities {
-    public SwimmingPool(String facilityID, String reservationID, String gender) {
-        super(facilityID, reservationID, gender);
+    public SwimmingPool(int facilityID, String gender, int capacity) {
+        super(facilityID, gender, capacity);
     }}
 
 class Classroom {
