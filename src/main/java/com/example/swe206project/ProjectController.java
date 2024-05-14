@@ -402,6 +402,14 @@ public class  ProjectController {
         User newUser = new User(UsernameInput.getText(), 1, EmailInput.getText(), getGender(),PasswordInput.getText() ,getType());
         users1.add(newUser);
     }
+    public boolean checkForLogin(String username, String password) {
+        for (User user : users1) {
+            if (user.getUserName().equals(username)) {
+                return user.getPassword().equals(password);
+            }
+        }
+        return false;
+    }
 }
 
 
