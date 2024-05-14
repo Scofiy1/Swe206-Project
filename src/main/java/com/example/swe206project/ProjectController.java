@@ -11,7 +11,9 @@ import java.io.File;
 import java.util.*;
 import java.time.LocalDateTime;
 import javafx.event.ActionEvent;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.text.View;
 
 public class  ProjectController {
@@ -411,13 +413,16 @@ public class  ProjectController {
         return false;
     }
     ArrayList<Reservation> reservations = new ArrayList<>();
+    int i = 1;
+
     public void addReservation() {
-        Reservation newReservation = new Reservation();
+        Reservation newReservation = new Reservation(i, "test", RoomIDInput.getText(), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText());
         reservations.add(newReservation);
+        i++;
     }
     ArrayList<Reservation.Event> events = new ArrayList<>();
     public void addEvent() {
-        Reservation.Event newEvent = new Reservation.Event(ReservationReasonInput.getText());
+        Reservation.Event newEvent = new Reservation.Event(i, "test", RoomIDInput.getText(), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText(),"test", 5, Integer.parseInt(ParticipantsInput.getText()));
         events.add(newEvent);
     }
 }

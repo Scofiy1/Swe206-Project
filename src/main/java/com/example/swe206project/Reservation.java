@@ -8,13 +8,13 @@ public class Reservation {
     private int reservationID;
     private String username;
     private String facilityID;
-    private Date reservationDate;
-    private LocalTime startingTime;
-    private LocalTime endingTime;
+    private String reservationDate;
+    private String startingTime;
+    private String endingTime;
     private String reservationReason;
 
-    public Reservation(int reservationID, String username, String facilityID, Date reservationDate,
-                       LocalTime startingTime, LocalTime endingTime, String reservationReason) {
+    public Reservation(int reservationID, String username, String facilityID, String reservationDate,
+                       String startingTime, String endingTime, String reservationReason) {
         this.reservationID = reservationID;
         this.username = username;
         this.facilityID = facilityID;
@@ -28,15 +28,14 @@ public class Reservation {
 
 
     public int getReservationID(){return reservationID;}
-
- class Event extends Reservation{
+    static class Event extends Reservation{
     private String eventName;
     private int requiredParticipants;
     private int currentParticipants;
-     public Event(int reservationID, String userID, String facilityID, Date reservationDate,
-                  LocalTime startingTime, LocalTime endingTime, String reservationReason,
+     public Event(int reservationID, String username, String facilityID, String reservationDate,
+                  String startingTime, String endingTime, String reservationReason,
                   String eventName, int requiredParticipants, int currentParticipants) {
-         super(reservationID, userID, facilityID, reservationDate, startingTime, endingTime, reservationReason);
+         super(reservationID, username, facilityID, reservationDate, startingTime, endingTime, reservationReason);
          this.eventName = eventName;
          this.requiredParticipants = requiredParticipants;
          this.currentParticipants = currentParticipants;
