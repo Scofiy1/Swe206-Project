@@ -32,7 +32,7 @@ public class Reservation {
     private String eventName;
     private int requiredParticipants;
     private int currentParticipants;
-     public Event(int reservationID, String username, int facilityID, String reservationDate,
+    public Event(int reservationID, String username, int facilityID, String reservationDate,
                   String startingTime, String endingTime, String reservationReason,
                   String eventName, int requiredParticipants, int currentParticipants) {
          super(reservationID, username, facilityID, reservationDate, startingTime, endingTime, reservationReason);

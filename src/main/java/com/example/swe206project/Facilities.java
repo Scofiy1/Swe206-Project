@@ -17,7 +17,7 @@ public class Facilities {
 
     public int getFacilityID() {return facilityID;}
     public int getCapacity(){return capacity;}
-
+    public String getGender(){return gender;}
 
     public boolean checkAvailability() {
         return isAvailable;
@@ -60,7 +60,8 @@ class Classroom {
         this.genderRestriction = genderRestriction;
 
     }
-
+    public String getGender(){return genderRestriction;}
+    public int getRoomNumber(){return roomNumber;}
     @Override
     public String toString() {
         return ("Room Number: " + roomNumber + ", Capacity: " + capacity + ", Gender restriction: " + genderRestriction);
@@ -79,6 +80,8 @@ class Labs {
         this.genderRestriction = genderRestriction;
 
     }
+    public String getGender(){return genderRestriction;}
+    public int getLabNumber(){return LabNumber;}
     @Override
     public String toString() {
         if(LabNumber<1000){

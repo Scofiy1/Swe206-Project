@@ -325,7 +325,7 @@
                   </HBox>
                   <HBox alignment="CENTER" layoutY="68.0" prefHeight="32.0" prefWidth="707.0">
                      <children>
-                        <Label fx:id="ReservationErrorInfoLabel" prefHeight="18.0" prefWidth="360.0" textFill="#f20707" />
+                        <Label fx:id="ReservationErrorInfoLabel" alignment="CENTER" prefHeight="18.0" prefWidth="360.0" textFill="#f20707" />
                      </children>
                   </HBox>
                   <HBox alignment="TOP_CENTER" layoutY="275.0" prefHeight="50.0" prefWidth="707.0">
