@@ -14,6 +14,7 @@ public class  ProjectController {
     ArrayList<Reservation> Reservations = new ArrayList<>();
     private boolean reservationEventClicked = false;
     private boolean isAdmin = false;
+    private String Building = "";
     @FXML
     private Button AccountButton;
     @FXML
@@ -224,10 +225,12 @@ public class  ProjectController {
         if (isAdmin){
             AdminHomepage();
             clearInputs();
+            ReservationErrorInfoLabel.setText("");
         }
         else {
         Homepage();
         clearInputs();
+        ReservationErrorInfoLabel.setText("");
     }}
 
     @FXML
@@ -277,15 +280,32 @@ public class  ProjectController {
 
     @FXML
     void ConfirmButtonClick(ActionEvent event) {
-        if (isAdmin){
-            AdminHomepage();
+        if (reservationEventClicked){
+            if(checkReservationInfo()){
+                if (isAdmin){
+                    AdminHomepage();
+                }
+                else
+                { Homepage();}
+                SuccessLabel.setVisible(true);
+                clearInputs();
+                ReservationErrorInfoLabel.setText("");
+            }
+            else {ReservationErrorInfoLabel.setText("Error Please fill all information");}
         }
-        else
-        { Homepage();}
+        else {if(checkEventInfo())
+            {if (isAdmin){
+                AdminHomepage();
+            }
+            else
+            { Homepage();}
+                SuccessLabel.setVisible(true);
+                clearInputs();
+                ReservationErrorInfoLabel.setText("");}
+         else {ReservationErrorInfoLabel.setText("Error Please fill all information");}
+        }
 
 
-        SuccessLabel.setVisible(true);
-        clearInputs();
 
     }
 
@@ -294,6 +314,7 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        Building = "Classroom";
         if (reservationEventClicked){
         hide();
         }
@@ -307,6 +328,7 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        Building = "ComputerLab";
         if (reservationEventClicked){
             hide();
         }
@@ -320,6 +342,7 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        Building = "SportCourt";
         if (reservationEventClicked){
             hide();
         }
@@ -333,6 +356,7 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        Building = "Gym";
         if (reservationEventClicked){
             hide();
         }
@@ -346,6 +370,7 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        Building = "SwimmingPool";
         if (reservationEventClicked){
             hide();
         }
@@ -517,6 +542,16 @@ public class  ProjectController {
 
 
     }
+    public boolean checkEventInfo() {
+        if (isEmpty(RequiredParticipantsInput) || isEmpty(CurrentParticipantsInput) || isEmpty(ReservationReasonInput)
+                || isEmpty(DateInput) || isEmpty(StartTimeInput) || isEmpty(EndTimeInput) || isEmpty(EventNameInput) || isEmpty(RoomIDInput)) {
+            return false;}
+            return true;}
+    public boolean checkReservationInfo() {
+        if (isEmpty(ReservationReasonInput)  || isEmpty(DateInput) || isEmpty(StartTimeInput) || isEmpty(EndTimeInput)
+                || isEmpty(RoomIDInput)) {
+            return false;}
+        return true;}
     public boolean checkRegisterInfo() {
         if (isEmpty(UsernameInput) || isEmpty(EmailInput) || isEmpty(PasswordInput)) {
             return false;
