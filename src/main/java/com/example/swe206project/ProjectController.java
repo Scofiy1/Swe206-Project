@@ -365,6 +365,11 @@ public class  ProjectController {
         }
     }
     ArrayList<Admin> admins = new ArrayList<>();
+    ArrayList<Classroom> building59_Classrooms = new ArrayList<>();
+    ArrayList<Labs> building59_Labs = new ArrayList<>();
+    ArrayList<SwimmingPool> swimmingPools = new ArrayList<>();
+    ArrayList<Gym> gyms = new ArrayList<>();
+    ArrayList<SportCourt> sportCourts = new ArrayList<>();
 
     public void initialize() {
 
@@ -373,6 +378,39 @@ public class  ProjectController {
             admins.add(new Admin("202034780", "s202034780@kfupm.edu.com", "Male", "1234",  "Admin"));
             admins.add(new Admin("202164610", "s202164610@kfupm.edu.com", "Male", "1234",  "Admin"));
             admins.add(new Admin("202253960", "s202253960@kfupm.edu.com", "Male", "1234",  "Admin"));
+
+            //classrooms//
+            for(int i = 1; i<=20; i++){
+                building59_Classrooms.add(new Classroom(1000+i, 40, "None"));
+            }
+            for(int i = 1; i<=10; i++){
+                building59_Classrooms.add(new Classroom(1020+i, 40, "Male"));
+            }
+            for(int i = 1; i<=10; i++){
+                building59_Classrooms.add(new Classroom(1030+i, 40, "Female"));
+            }
+            //labs//
+            for(int i = 1; i<=5; i++){
+                building59_Labs.add(new Labs(i, 20, "None"));
+            }
+            for(int i = 1; i<=5; i++){
+                building59_Labs.add(new Labs(5+i, 20, "Male"));
+            }
+            for(int i = 1; i<=5; i++){
+                building59_Labs.add(new Labs(10+i, 20, "Female"));
+            }
+            //swimming pools//
+            swimmingPools.add(new SwimmingPool(1, "Male", 40));
+            swimmingPools.add(new SwimmingPool(2, "Female",30 ));
+
+            //gyms//
+            gyms.add(new Gym(3,"Male", 20));
+            gyms.add(new Gym(4,"Female", 20));
+
+            //Sport courts//
+            sportCourts.add(new SportCourt(5,"Male", 50));
+            sportCourts.add(new SportCourt(6,"Female", 33));
+
         } catch (Exception e) {
             System.out.println("Error loading image: " + e.getMessage());
         }
@@ -553,11 +591,13 @@ public class  ProjectController {
         Reservation newReservation = new Reservation(i, UsernameLabel.getText(), RoomIDInput.getText(), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText());
         reservations.add(newReservation);
         i++;
+
     }
     ArrayList<Reservation.Event> events = new ArrayList<>();
     public void addEvent() {
         Reservation.Event newEvent = new Reservation.Event(i, UsernameLabel.getText(), RoomIDInput.getText(), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText(),EventNameInput.getText(), Integer.parseInt(RequiredParticipantsInput.getText()), Integer.parseInt(CurrentParticipantsInput.getText()));
         events.add(newEvent);
+        i++;
     }
 }
 
