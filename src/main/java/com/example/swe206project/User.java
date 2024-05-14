@@ -51,9 +51,9 @@ public class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
-    public String getPassword(String password) {return password;}
+    public String getPassword() {return password;}
     public void setPassword(String password){this.password = password;}
-    public String getType(String type){return type;}
+    public String getType(){return type;}
     public void setType(String type){this.type = type;}
 
     public void joinEvent(String eventName){}
