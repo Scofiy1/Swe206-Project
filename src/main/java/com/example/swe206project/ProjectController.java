@@ -216,6 +216,8 @@ public class  ProjectController {
     @FXML
     void RegisterButtonClick(ActionEvent event) {
         Homepage();
+        addUser();
+        WelcomeLabel.setText(users1.toString());
     }
     @FXML
     void LoginButtonClick(ActionEvent event) {
@@ -265,6 +267,8 @@ public class  ProjectController {
         ImagesHbox.setVisible(false);
 
     }
+
+
     @FXML
     public String getGender() {
         if (rMale.isSelected()) {
@@ -393,7 +397,11 @@ public class  ProjectController {
         SportCourt.setImage(image8);
 
     }
-
+    ArrayList<User> users1 = new ArrayList<>();
+    public void addUser() {
+        User newUser = new User(UsernameInput.getText(), 1, EmailInput.getText(), getGender());
+        users1.add(newUser);
+    }
 }
 
 
