@@ -373,7 +373,7 @@ public class  ProjectController {
     public boolean findReservation (Reservation Res){
         for (Reservation reservation : Reservations) {
 
-            if (reservation.getReservationID().equals(Res.getReservationID())) {
+            if (reservation.getReservationID()==(Res.getReservationID())) {
                 return true;
             }
         }
@@ -399,7 +399,7 @@ public class  ProjectController {
     }
     ArrayList<User> users1 = new ArrayList<>();
     public void addUser() {
-        User newUser = new User(UsernameInput.getText(), 1, EmailInput.getText(), getGender(),PasswordInput.getText() ,getType());
+        User newUser = new User(UsernameInput.getText(), EmailInput.getText(), getGender(),PasswordInput.getText() ,getType());
         users1.add(newUser);
     }
     public boolean checkForLogin(String username, String password) {
@@ -409,6 +409,16 @@ public class  ProjectController {
             }
         }
         return false;
+    }
+    ArrayList<Reservation> reservations = new ArrayList<>();
+    public void addReservation() {
+        Reservation newReservation = new Reservation();
+        reservations.add(newReservation);
+    }
+    ArrayList<Reservation.Event> events = new ArrayList<>();
+    public void addEvent() {
+        Reservation.Event newEvent = new Reservation.Event(ReservationReasonInput.getText());
+        events.add(newEvent);
     }
 }
 

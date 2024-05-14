@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Reservation {
-    private String reservationID;
-    private String userID;
+    private int reservationID;
+    private String username;
     private String facilityID;
     private Date reservationDate;
     private LocalTime startingTime;
     private LocalTime endingTime;
     private String reservationReason;
 
-    public Reservation(String reservationID, String userID, String facilityID, Date reservationDate,
+    public Reservation(int reservationID, String username, String facilityID, Date reservationDate,
                        LocalTime startingTime, LocalTime endingTime, String reservationReason) {
         this.reservationID = reservationID;
-        this.userID = userID;
+        this.username = username;
         this.facilityID = facilityID;
         this.reservationDate = reservationDate;
         this.startingTime = startingTime;
@@ -27,13 +27,13 @@ public class Reservation {
     }
 
 
-    public String getReservationID(){return reservationID;}
+    public int getReservationID(){return reservationID;}
 
  class Event extends Reservation{
     private String eventName;
     private int requiredParticipants;
     private int currentParticipants;
-     public Event(String reservationID, String userID, String facilityID, Date reservationDate,
+     public Event(int reservationID, String userID, String facilityID, Date reservationDate,
                   LocalTime startingTime, LocalTime endingTime, String reservationReason,
                   String eventName, int requiredParticipants, int currentParticipants) {
          super(reservationID, userID, facilityID, reservationDate, startingTime, endingTime, reservationReason);
