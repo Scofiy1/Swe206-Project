@@ -398,10 +398,7 @@ public class  ProjectController {
 
     }
     ArrayList<User> users1 = new ArrayList<>();
-    public void addUser() {
-        User newUser = new User(UsernameInput.getText(), 1, EmailInput.getText(), getGender());
-        users1.add(newUser);
-    }
+    public void addUser() {}
 }
 
 
