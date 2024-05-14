@@ -323,10 +323,9 @@
                         <TextField fx:id="EndTimeInput" promptText="00:00" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" layoutY="50.0" prefHeight="50.0" prefWidth="707.0">
+                  <HBox alignment="CENTER" layoutY="68.0" prefHeight="32.0" prefWidth="707.0">
                      <children>
-                        <Label fx:id="ReservationErrorInfoLabel" textFill="#f20707" />
-                        <Label />
+                        <Label fx:id="ReservationErrorInfoLabel" prefHeight="18.0" prefWidth="360.0" textFill="#f20707" />
                      </children>
                   </HBox>
                   <HBox alignment="TOP_CENTER" layoutY="275.0" prefHeight="50.0" prefWidth="707.0">
@@ -370,7 +369,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <AnchorPane fx:id="JoinEventPage" layoutX="137.0" layoutY="196.0" prefHeight="319.0" prefWidth="642.0" style="-fx-background-color: #EAEAEA;" visible="false">
+            <AnchorPane fx:id="JoinEventPage" layoutX="137.0" layoutY="196.0" prefHeight="319.0" prefWidth="642.0" style="-fx-background-color: #EAEAEA;">
                <children>
                   <Button fx:id="JoinButton" layoutX="241.0" layoutY="217.0" mnemonicParsing="false" onAction="#JoinButtonClick" prefHeight="26.0" prefWidth="163.0" text="Join Event" />
                   <Label fx:id="EnterEventLabel" layoutX="96.0" layoutY="72.0" prefHeight="27.0" prefWidth="487.0" text="Enter the Name of the Event you Would like to Join">
@@ -378,7 +377,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="212.0" layoutY="160.0" prefHeight="26.0" prefWidth="218.0" />
+                  <TextField fx:id="JoinEventInput" layoutX="212.0" layoutY="160.0" prefHeight="26.0" prefWidth="218.0" />
                   <Label fx:id="ErrorEventnameLabel" layoutX="164.0" layoutY="115.0" prefHeight="18.0" prefWidth="317.0" />
                </children>
             </AnchorPane>

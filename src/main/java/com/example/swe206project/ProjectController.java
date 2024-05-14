@@ -162,6 +162,9 @@ public class  ProjectController {
     private AnchorPane ViewEventsPage;
 
     @FXML
+    private TextField JoinEventInput;
+
+    @FXML
     void JoinButtonClick(ActionEvent event) {
         SuccessLabel.setText("You have registered in an event!");
         JoinEventPage.setVisible(false);
