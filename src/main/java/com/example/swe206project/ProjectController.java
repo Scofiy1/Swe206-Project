@@ -414,7 +414,7 @@ public class  ProjectController {
     }
     ArrayList<Reservation> reservations = new ArrayList<>();
     int i = 1;
-
+//test//
     public void addReservation() {
         Reservation newReservation = new Reservation(i, "test", RoomIDInput.getText(), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText());
         reservations.add(newReservation);
