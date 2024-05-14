@@ -12,7 +12,7 @@ import javafx.event.ActionEvent;
 
 public class  ProjectController {
     ArrayList<Reservation> Reservations = new ArrayList<>();
-
+    private boolean reservationEventClicked = false;
     @FXML
     private Button AccountButton;
     @FXML
@@ -174,6 +174,7 @@ public class  ProjectController {
         ImagesHbox.setVisible(true);
         SuccessLabel.setVisible(false);
         SuccessLabel.setText("You have Successfully made a Reservation");
+        reservationEventClicked = true;
     }
 
     @FXML
@@ -183,6 +184,7 @@ public class  ProjectController {
         ImagesHbox.setVisible(true);
         SuccessLabel.setVisible(false);
         SuccessLabel.setText("You have Successfully Opened a Reservation Event");
+        reservationEventClicked = false;
 
     }
 
@@ -278,6 +280,12 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        if (reservationEventClicked){
+        hide();
+        }
+        else{
+        unhide();
+        }
     }
 
     @FXML
@@ -285,6 +293,12 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        if (reservationEventClicked){
+            hide();
+        }
+        else{
+            unhide();
+        }
     }
 
     @FXML
@@ -292,6 +306,12 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        if (reservationEventClicked){
+            hide();
+        }
+        else{
+            unhide();
+        }
     }
 
     @FXML
@@ -299,6 +319,12 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        if (reservationEventClicked){
+            hide();
+        }
+        else{
+            unhide();
+        }
     }
 
     @FXML
@@ -306,6 +332,12 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
+        if (reservationEventClicked){
+            hide();
+        }
+        else{
+            unhide();
+        }
 
     }
 
@@ -412,15 +444,28 @@ public class  ProjectController {
         rFaculty.setSelected(false);
         rStaff.setSelected(false);
     }
-
+    public void hide(){
+        CurrentParticipantsInput.setVisible(false);
+        CurrentParticipantsLabel.setVisible(false);
+        RequiredParticipantsInput.setVisible(false);
+        RequiredParticipantsLabel.setVisible(false);
+        EventNameInput.setVisible(false);
+        EventNameLabel.setVisible(false);}
+    public void unhide(){
+        CurrentParticipantsInput.setVisible(true);
+        CurrentParticipantsLabel.setVisible(true);
+        RequiredParticipantsInput.setVisible(true);
+        RequiredParticipantsLabel.setVisible(true);
+        EventNameInput.setVisible(true);
+        EventNameLabel.setVisible(true);}
     public void clearInputs() {
         ReservationReasonInput.clear();
         DateInput.clear();
         StartTimeInput.clear();
         EndTimeInput.clear();
-
+        CurrentParticipantsInput.clear();
         RoomIDInput.clear();
-
+        RequiredParticipantsInput.clear();
         EventNameInput.clear();
     }
 
