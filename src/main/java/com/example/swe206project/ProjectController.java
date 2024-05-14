@@ -399,7 +399,7 @@ public class  ProjectController {
     }
     ArrayList<User> users1 = new ArrayList<>();
     public void addUser() {
-        User newUser = new User(UsernameInput.getText(), 1, EmailInput.getText(), getGender());
+        User newUser = new User(UsernameInput.getText(), 1, EmailInput.getText(), getGender(),PasswordInput.getText() ,getType());
         users1.add(newUser);
     }
 }
