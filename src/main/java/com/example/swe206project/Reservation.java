@@ -26,9 +26,14 @@ public class Reservation {
 
     }
 
+    @Override
+    public String toString() {
+        return ("Reservation ID: " + reservationID + ", Reserved by: " + username + ", Facility ID: " + facilityID + ", " +
+                "Reservation Date: " + reservationDate + ", From: " + startingTime + " To: " + endingTime + "Reason of reservation: " + reservationReason);
+    }
 
     public int getReservationID(){return reservationID;}
-    static class Event extends Reservation{
+    static public class Event extends Reservation{
     private String eventName;
     private int requiredParticipants;
     private int currentParticipants;
@@ -42,6 +47,28 @@ public class Reservation {
 
 
      }
-         public void openEvent(String eventName){}
+
+
+
+     public void eventInformation(Event event){
+         System.out.println(event + "Event Name: " + eventName + ", Current Participants: " +
+                 currentParticipants + ", Required Participants: " + requiredParticipants);
+
+     }
+
+
+     public String getEventName(){return eventName;}
+
+     public int getCurrentParticipants(){return currentParticipants;}
+
+     public int getRequiredParticipants(){return requiredParticipants;}
+
+
+        @Override
+        public String toString() {
+            return super.toString();
+        }
+
+        public void openEvent(String eventName){}
 
  }}

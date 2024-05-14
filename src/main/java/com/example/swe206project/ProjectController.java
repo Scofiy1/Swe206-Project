@@ -650,7 +650,11 @@ public class  ProjectController {
     }
     ArrayList<Reservation.Event> events = new ArrayList<>();
     public void addEvent() {
-        Reservation.Event newEvent = new Reservation.Event(i, UsernameLabel.getText(), Integer.parseInt(RoomIDInput.getText()), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText(),EventNameInput.getText(), Integer.parseInt(RequiredParticipantsInput.getText()), Integer.parseInt(CurrentParticipantsInput.getText()));
+        Reservation.Event newEvent = new Reservation.Event(i, UsernameLabel.getText(),
+                Integer.parseInt(RoomIDInput.getText()), DateInput.getText(), StartTimeInput.getText(),
+                EndTimeInput.getText(), ReservationReasonInput.getText(),EventNameInput.getText(),
+                Integer.parseInt(RequiredParticipantsInput.getText()),
+                Integer.parseInt(CurrentParticipantsInput.getText()));
         events.add(newEvent);
         i++;
     }
