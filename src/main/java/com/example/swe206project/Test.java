@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Test {
     public static void main(String[] args) {
 
-        User user1 = new User("Ali", 1, "test.gmail.com", "Male");
+        User user1 = new User("Ali", 1, "test.gmail.com", "Male", "1234", "Student");
 
         ArrayList<Classroom> building59_Classrooms = new ArrayList<>();
         for(int i = 1; i<=20; i++){
@@ -42,9 +42,9 @@ public class Test {
 
 
         ArrayList<Admin> admins = new ArrayList<>();
-        admins.add(new Admin("Mohammed Alfilfil", 202034780, "s202034780@kfupm.edu.com", "Male"));
-        admins.add(new Admin("Alridha Almaden", 202164610, "s202164610@kfupm.edu.com", "Male"));
-        admins.add(new Admin("Muhannad AlMelaifi", 202253960, "s202253960@kfupm.edu.com", "Male"));
+        admins.add(new Admin("Mohammed Alfilfil", 202034780, "s202034780@kfupm.edu.com", "Male", "1234",  "Admin"));
+        admins.add(new Admin("Alridha Almaden", 202164610, "s202164610@kfupm.edu.com", "Male", "1234",  "Admin"));
+        admins.add(new Admin("Muhannad AlMelaifi", 202253960, "s202253960@kfupm.edu.com", "Male", "1234",  "Admin"));
 
         System.out.println();
         System.out.println();

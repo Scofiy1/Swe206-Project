@@ -7,13 +7,16 @@ public class User {
     private int userID;
     private String email;
     private String gender;
+    private String password;
+    private String type;
 
-
-    public User(String userName, int userID, String email, String gender) {
+    public User(String userName, int userID, String email, String gender, String password, String type) {
         this.userName = userName;
         this.userID = userID;
         this.email = email;
         this.gender = gender;
+        this.password = password;
+        this.type = type;
     }
 
 
@@ -48,30 +51,34 @@ public class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
+    public String getPassword(String password) {return password;}
+    public void setPassword(String password){this.password = password;}
+    public String getType(String type){return type;}
+    public void setType(String type){this.type = type;}
 
     public void joinEvent(String eventName){}
 
     @Override
     public String toString() {
-        return ("UserName:" + userName + ", UserID:" + userID + ", User Email:" + email);
+        return ("UserName:" + userName + ", UserID:" + userID + ", User Email:" + email + ", User Gender:" + gender + ", User Type:" + type);
     }
 }
 class Admin extends User{
-    public Admin(String userName, int userID, String email, String gender) {
-        super(userName, userID, email, gender);
+    public Admin(String userName, int userID, String email, String gender, String password, String type) {
+        super(userName, userID, email, gender, password, type);
     }
     void viewAllReservations(){}
     void cancelReservation(String reservationID){}
     void sendCancelEmail(){}
 }
 class Faculty extends User{
-    public Faculty(String userName, int userID, String email, String gender) {
-        super(userName, userID, email, gender);
+    public Faculty(String userName, int userID, String email, String gender, String password, String type) {
+        super(userName, userID, email, gender, password, type);
     }
 }
 class Staff extends User{
-    public Staff(String userName, int userID, String email, String gender) {
-        super(userName, userID, email, gender);
+    public Staff(String userName, int userID, String email, String gender, String password, String type) {
+        super(userName, userID, email, gender, password, type);
     }
 }
 
@@ -80,8 +87,8 @@ class Student extends User{
     boolean inClub;
     boolean clubPresident;
 
-    public Student(String userName, int userID, String email, String gender, boolean inClub, boolean clubPresident) {
-        super(userName, userID, email, gender);
+    public Student(String userName, int userID, String email, String gender,String password, String type, boolean inClub, boolean clubPresident) {
+        super(userName, userID, email, gender, password, type);
         this.inClub = inClub;
         this.clubPresident = clubPresident;
 
