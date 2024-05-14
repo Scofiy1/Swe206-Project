@@ -369,7 +369,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <AnchorPane fx:id="JoinEventPage" layoutX="137.0" layoutY="196.0" prefHeight="319.0" prefWidth="642.0" style="-fx-background-color: #EAEAEA;">
+            <AnchorPane fx:id="JoinEventPage" layoutX="137.0" layoutY="196.0" prefHeight="319.0" prefWidth="642.0" style="-fx-background-color: #EAEAEA;" visible="false">
                <children>
                   <Button fx:id="JoinButton" layoutX="241.0" layoutY="217.0" mnemonicParsing="false" onAction="#JoinButtonClick" prefHeight="26.0" prefWidth="163.0" text="Join Event" />
                   <Label fx:id="EnterEventLabel" layoutX="96.0" layoutY="72.0" prefHeight="27.0" prefWidth="487.0" text="Enter the Name of the Event you Would like to Join">
