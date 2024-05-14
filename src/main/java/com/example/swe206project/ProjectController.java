@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 public class  ProjectController {
     ArrayList<Reservation> Reservations = new ArrayList<>();
     private boolean reservationEventClicked = false;
+    private boolean isAdmin = false;
     @FXML
     private Button AccountButton;
     @FXML
@@ -163,6 +164,10 @@ public class  ProjectController {
     void JoinButtonClick(ActionEvent event) {
         SuccessLabel.setText("You have registered in an event!");
         JoinEventPage.setVisible(false);
+        if (isAdmin){
+            AdminHomepage();
+        }
+        else
         Homepage();
 
     }
@@ -216,7 +221,7 @@ public class  ProjectController {
 
     @FXML
     void HomeButtonClick(ActionEvent event) {
-        if (getUserType(UsernameLabel.getText()).equals("Admin")){
+        if (isAdmin){
             AdminHomepage();
             clearInputs();
         }
@@ -247,12 +252,15 @@ public class  ProjectController {
                 RegisterErrorLabel.setText("Error Please fill all requested information");
         }
         else
-        if (checkForLogin(UsernameInput.getText(),PasswordInput.getText()))
-        { UsernameLabel.setText(UsernameInput.getText());
-
+        if (checkForLogin(UsernameInput.getText(),PasswordInput.getText())) {
+            UsernameLabel.setText(UsernameInput.getText());
             Homepage();
+            isAdmin= false;
+        }else if (checkForAdmin(UsernameInput.getText(),PasswordInput.getText())){
+                AdminHomepage();
+                isAdmin = true;
+            }
 
-        }
         else
             RegisterErrorLabel.setText("Error Username and Password dont match");
 
@@ -269,7 +277,13 @@ public class  ProjectController {
 
     @FXML
     void ConfirmButtonClick(ActionEvent event) {
-        Homepage();
+        if (isAdmin){
+            AdminHomepage();
+        }
+        else
+        { Homepage();}
+
+
         SuccessLabel.setVisible(true);
         clearInputs();
 
@@ -517,7 +531,9 @@ public class  ProjectController {
         private boolean isEmpty(TextField textField) {
             return textField.getText() == null || textField.getText().trim().isEmpty();
         }
-
+    public boolean isAdmin(User user) {
+        return user instanceof Admin;
+    }
 
 
     ArrayList<User> users1 = new ArrayList<>();
@@ -532,6 +548,8 @@ public class  ProjectController {
                 return user.getPassword().equals(password);
             }
         }
+        return false;}
+    public boolean checkForAdmin(String username, String password) {
         for(Admin admin:admins){
             if(admin.getUserName().equals(username)){
                 return admin.getPassword().equals(password);
