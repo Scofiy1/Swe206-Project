@@ -372,7 +372,6 @@ public class  ProjectController {
         EmailInput.clear();
         RegisterErrorLabel.setText("");
         clearRadioButtons();
-
     }
 
     void Homepage() {
@@ -387,7 +386,6 @@ public class  ProjectController {
         SuccessLabel.setVisible(false);
         JoinEventPage.setVisible(false);
         ViewEventsPage.setVisible(false);
-
     }
     void AdminHomepage(){
         Homepage();
@@ -485,5 +483,20 @@ public class  ProjectController {
             if (user.getUserName().equals(username)) {
                 return user.getType();}}
         return null;
-    }}
+    }
+
+    ArrayList<Reservation> reservations = new ArrayList<>();
+    int i = 1;
+
+    public void addReservation() {
+        Reservation newReservation = new Reservation(i, "test", RoomIDInput.getText(), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText());
+        reservations.add(newReservation);
+        i++;
+    }
+    ArrayList<Reservation.Event> events = new ArrayList<>();
+    public void addEvent() {
+        Reservation.Event newEvent = new Reservation.Event(i, "test", RoomIDInput.getText(), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText(),"test", 5, Integer.parseInt(ParticipantsInput.getText()));
+        events.add(newEvent);
+    }
+}
 
