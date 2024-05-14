@@ -364,11 +364,15 @@ public class  ProjectController {
             return null;
         }
     }
+    ArrayList<Admin> admins = new ArrayList<>();
 
     public void initialize() {
 
         try {
             initializeImages();
+            admins.add(new Admin("202034780", "s202034780@kfupm.edu.com", "Male", "1234",  "Admin"));
+            admins.add(new Admin("202164610", "s202164610@kfupm.edu.com", "Male", "1234",  "Admin"));
+            admins.add(new Admin("202253960", "s202253960@kfupm.edu.com", "Male", "1234",  "Admin"));
         } catch (Exception e) {
             System.out.println("Error loading image: " + e.getMessage());
         }
@@ -497,6 +501,7 @@ public class  ProjectController {
         Image image8 = new Image(getClass().getResource("/com/example/swe206project/SportCourt.jpg").toString());
         SportCourt.setImage(image8);
 
+
     }
     public boolean checkRegisterInfo() {
         if (isEmpty(UsernameInput) || isEmpty(EmailInput) || isEmpty(PasswordInput)) {
@@ -513,17 +518,23 @@ public class  ProjectController {
             return textField.getText() == null || textField.getText().trim().isEmpty();
         }
 
+
+
     ArrayList<User> users1 = new ArrayList<>();
 
     public void addUser() {
-        User newUser = new User(UsernameInput.getText(), EmailInput.getText(), getGender(), PasswordInput.getText(), getType());
-        users1.add(newUser);
+        users1.add(new User(UsernameInput.getText(), EmailInput.getText(), getGender(), PasswordInput.getText(), getType()));
     }
 
     public boolean checkForLogin(String username, String password) {
         for (User user : users1) {
             if (user.getUserName().equals(username)) {
                 return user.getPassword().equals(password);
+            }
+        }
+        for(Admin admin:admins){
+            if(admin.getUserName().equals(username)){
+                return admin.getPassword().equals(password);
             }
         }
         return false;
