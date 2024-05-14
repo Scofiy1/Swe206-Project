@@ -11,9 +11,7 @@ import java.io.File;
 import java.util.*;
 import java.time.LocalDateTime;
 import javafx.event.ActionEvent;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import javax.swing.text.View;
 
 public class  ProjectController {
@@ -33,7 +31,8 @@ public class  ProjectController {
 
     @FXML
     private Label AlreadyRegisteredLabel;
-
+    @FXML
+    private Label UsernameLabel;
     @FXML
     private HBox ButtonsHbox;
 
@@ -113,10 +112,17 @@ public class  ProjectController {
     @FXML
     private Label ReservationErrorInfoLabel;
 
+
+    @FXML
+    private Label RequiredParticipants;
+    @FXML
+    private Label EventNameLabel;
+    @FXML
+    private TextField EventNameInput;
+
     @FXML
     private TextField RoomIDInput;
-    @FXML
-    private TextField ParticipantsInput;
+
     @FXML
     private TextField DateInput;
     @FXML
@@ -150,19 +156,20 @@ public class  ProjectController {
     private AnchorPane ViewEventsPage;
 
     @FXML
-    void JoinButtonClick(ActionEvent event){
+    void JoinButtonClick(ActionEvent event) {
         SuccessLabel.setText("You have registered in an event!");
         JoinEventPage.setVisible(false);
         Homepage();
 
     }
+
     @FXML
     void MakeReservationButtonClick(ActionEvent event) {
-    ChoicePage.setVisible(true);
-    HideHomepage();
-    ImagesHbox.setVisible(true);
-    SuccessLabel.setVisible(false);
-    SuccessLabel.setText("You have Successfully made a Reservation");
+        ChoicePage.setVisible(true);
+        HideHomepage();
+        ImagesHbox.setVisible(true);
+        SuccessLabel.setVisible(false);
+        SuccessLabel.setText("You have Successfully made a Reservation");
     }
 
     @FXML
@@ -174,6 +181,7 @@ public class  ProjectController {
         SuccessLabel.setText("You have Successfully Opened a Reservation Event");
 
     }
+
     @FXML
     void JoinReservationEventButtonClick(ActionEvent event) {
         HideHomepage();
@@ -182,6 +190,7 @@ public class  ProjectController {
         EnterEventLabel.setText("Enter the Name of the Event you Would like to Join");
         SuccessLabel.setText("You have Successfully Joined an Event");
     }
+
     @FXML
     void ViewAllReservationsButtonClick(ActionEvent event) {
         HideHomepage();
@@ -198,17 +207,23 @@ public class  ProjectController {
 
 
     }
+
     @FXML
     void HomeButtonClick(ActionEvent event) {
-    Homepage();
-    clearInputs();
-    }
+        if (getUserType(UsernameLabel.getText()).equals("Admin")){
+            AdminHomepage();
+            clearInputs();
+        }
+        else {
+        Homepage();
+        clearInputs();
+    }}
 
     @FXML
     void AccountButtonClick(ActionEvent event) {
-    Login();
-    ChoicePage.setVisible(false);
-    ReservationInfoPage.setVisible(false);
+        Login();
+        ChoicePage.setVisible(false);
+        ReservationInfoPage.setVisible(false);
     }
 
     @FXML
@@ -217,24 +232,40 @@ public class  ProjectController {
     }
     @FXML
     void RegisterButtonClick(ActionEvent event) {
-        Homepage();
-        addUser();
-        WelcomeLabel.setText(users1.toString());
+        if (LoginLabel.getText().equals("Login!")){
+            if(checkRegisterInfo()){
+                addUser();
+                UsernameLabel.setText(UsernameInput.getText());
+                Homepage();}
+            else
+                RegisterErrorLabel.setText("Error Please fill all requested information");
+        }
+        else
+        if (checkForLogin(UsernameInput.getText(),PasswordInput.getText()))
+        { UsernameLabel.setText(UsernameInput.getText());
+
+            Homepage();
+
+        }
+        else
+            RegisterErrorLabel.setText("Error Username and Password dont match");
+
     }
+
     @FXML
     void LoginButtonClick(ActionEvent event) {
         if (LoginLabel.getText().equals("Login!")) {
             Login();
-        }
-        else {
+        } else {
             Register();
         }
     }
+
     @FXML
     void ConfirmButtonClick(ActionEvent event) {
-    Homepage();
-    SuccessLabel.setVisible(true);
-    clearInputs();
+        Homepage();
+        SuccessLabel.setVisible(true);
+        clearInputs();
 
     }
 
@@ -244,24 +275,28 @@ public class  ProjectController {
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
     }
+
     @FXML
     void ComputerLabButtonClick(ActionEvent event) {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
     }
+
     @FXML
     void SportCourtButtonClick(ActionEvent event) {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
     }
+
     @FXML
     void GymButtonClick(ActionEvent event) {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
     }
+
     @FXML
     void SwimmingPoolButtonClick(ActionEvent event) {
         ReservationInfoPage.setVisible(true);
@@ -281,6 +316,7 @@ public class  ProjectController {
             return null;
         }
     }
+
     public String getType() {
         if (rStudent.isSelected()) {
             return "Student selected";
@@ -292,17 +328,18 @@ public class  ProjectController {
             return null;
         }
     }
+
     public void initialize() {
 
         try {
             initializeImages();
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error loading image: " + e.getMessage());
         }
-            Register();
-        }
+        Register();
+    }
 
-    void Register () {
+    void Register() {
         MenuBar.setVisible(false);
         RegisterBar.setVisible(true);
         EmailBar.setVisible(true);
@@ -317,9 +354,9 @@ public class  ProjectController {
         EmailInput.clear();
         AlreadyRegisteredLabel.setText("Already Registered?");
         clearRadioButtons();
-        }
+    }
 
-    void Login () {
+    void Login() {
         MenuBar.setVisible(false);
         RegisterBar.setVisible(true);
         EmailBar.setVisible(false);
@@ -335,7 +372,8 @@ public class  ProjectController {
         EmailInput.clear();
         clearRadioButtons();
     }
-    void Homepage () {
+
+    void Homepage() {
         MenuBar.setVisible(true);
         RegisterBar.setVisible(false);
         ImagesHbox.setVisible(true);
@@ -348,13 +386,19 @@ public class  ProjectController {
         JoinEventPage.setVisible(false);
         ViewEventsPage.setVisible(false);
     }
-    void HideHomepage(){
+    void AdminHomepage(){
+        Homepage();
+        AdminButtonsHbox.setVisible(true);
+    }
+
+    void HideHomepage() {
         ImagesHbox.setVisible(false);
         ButtonsHbox.setVisible(false);
         LiketodoLabel.setVisible(false);
         WelcomeLabel.setVisible(false);
         AdminButtonsHbox.setVisible(false);
     }
+
     public void clearRadioButtons() {
         rMale.setSelected(false);
         rFemale.setSelected(false);
@@ -362,26 +406,30 @@ public class  ProjectController {
         rFaculty.setSelected(false);
         rStaff.setSelected(false);
     }
-    public void clearInputs(){
+
+    public void clearInputs() {
         ReservationReasonInput.clear();
         DateInput.clear();
         StartTimeInput.clear();
         EndTimeInput.clear();
-        ParticipantsInput.clear();
+
         RoomIDInput.clear();
 
-
+        EventNameInput.clear();
     }
-    public boolean findReservation (Reservation Res){
+
+    public boolean findReservation(Reservation Res) {
         for (Reservation reservation : Reservations) {
 
-            if (reservation.getReservationID()==(Res.getReservationID())) {
+            if (reservation.getReservationID() == (Res.getReservationID())) {
                 return true;
             }
         }
         return false;
     }
-    void initializeImages () { Image image = new Image(getClass().getResource("/com/example/swe206project/Home.png").toString());
+
+    void initializeImages() {
+        Image image = new Image(getClass().getResource("/com/example/swe206project/Home.png").toString());
         HomeIcon.setImage(image);
         Image image2 = new Image(getClass().getResource("/com/example/swe206project/Account.png").toString());
         AccountIcon.setImage(image2);
@@ -399,11 +447,28 @@ public class  ProjectController {
         SportCourt.setImage(image8);
 
     }
+    public boolean checkRegisterInfo() {
+        if (isEmpty(UsernameInput) || isEmpty(EmailInput) || isEmpty(PasswordInput)) {
+            return false;
+        }
+        if (!rMale.isSelected() && !rFemale.isSelected()) {
+            return false;
+        }
+        if (!rFaculty.isSelected() && !rStaff.isSelected() && !rStudent.isSelected()) {
+            return false;}
+        return true;
+    }
+        private boolean isEmpty(TextField textField) {
+            return textField.getText() == null || textField.getText().trim().isEmpty();
+        }
+
     ArrayList<User> users1 = new ArrayList<>();
+
     public void addUser() {
-        User newUser = new User(UsernameInput.getText(), EmailInput.getText(), getGender(),PasswordInput.getText() ,getType());
+        User newUser = new User(UsernameInput.getText(), EmailInput.getText(), getGender(), PasswordInput.getText(), getType());
         users1.add(newUser);
     }
+
     public boolean checkForLogin(String username, String password) {
         for (User user : users1) {
             if (user.getUserName().equals(username)) {
@@ -412,19 +477,24 @@ public class  ProjectController {
         }
         return false;
     }
-    ArrayList<Reservation> reservations = new ArrayList<>();
-    int i = 1;
-//test//
-    public void addReservation() {
-        Reservation newReservation = new Reservation(i, "test", RoomIDInput.getText(), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText());
-        reservations.add(newReservation);
-        i++;
+    public String getUserType(String username) {
+        for (User user : users1) {
+            if (user.getUserName().equals(username)) {
+                return user.getType();}}
+        return null;
     }
+
+
+                ArrayList<Reservation> reservations = new ArrayList<>();
+
+
+    public void addReservation() {
+
+    }
+
     ArrayList<Reservation.Event> events = new ArrayList<>();
+
     public void addEvent() {
-        Reservation.Event newEvent = new Reservation.Event(i, "test", RoomIDInput.getText(), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText(),"test", 5, Integer.parseInt(ParticipantsInput.getText()));
-        events.add(newEvent);
     }
 }
-
 
