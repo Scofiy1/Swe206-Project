@@ -163,6 +163,8 @@ public class  ProjectController {
 
     @FXML
     private TextField JoinEventInput;
+    @FXML
+    private Label EventLabel;
 
     @FXML
     void JoinButtonClick(ActionEvent event) {
@@ -210,6 +212,9 @@ public class  ProjectController {
     void ViewAllReservationsButtonClick(ActionEvent event) {
         HideHomepage();
         ViewEventsPage.setVisible(true);
+        for (Reservation reservation : Reservations) {
+            EventLabel.setText(reservation.toString());
+        }
     }
 
     @FXML
@@ -219,7 +224,9 @@ public class  ProjectController {
         JoinButton.setText("Cancel Reservation");
         EnterEventLabel.setText("Enter the Name of the Event you Would like to Remove");
         SuccessLabel.setText("You have Cancelled a Reservation");
-
+        try{
+        Reservations.remove(JoinEventInput.getText());}
+        catch(Exception e){SuccessLabel.setText("No reservation exists with that name");}
 
     }
 

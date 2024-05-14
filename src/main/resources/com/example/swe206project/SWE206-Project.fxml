@@ -388,7 +388,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="EventLabel" layoutX="22.0" layoutY="71.0" prefHeight="26.0" prefWidth="692.0" />
+                  <Label fx:id="EventLabel" alignment="TOP_LEFT" layoutX="22.0" layoutY="71.0" prefHeight="462.0" prefWidth="692.0" />
                </children>
             </AnchorPane>
          </children>
