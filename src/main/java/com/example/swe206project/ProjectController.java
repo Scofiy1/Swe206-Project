@@ -80,7 +80,6 @@ public class  ProjectController {
     @FXML
     private Button LoginButton;
 
-
     @FXML
     private Label LoginLabel;
 
@@ -294,22 +293,18 @@ public class  ProjectController {
                 SuccessLabel.setVisible(true);
                 clearInputs();
                 ReservationErrorInfoLabel.setText("");
-                addReservation();
             }
             else {ReservationErrorInfoLabel.setText("Error Please fill all information");}
         }
         else {if(checkEventInfo())
-            {
-                if (isAdmin){
+            {if (isAdmin){
                 AdminHomepage();
             }
             else
             { Homepage();}
-
                 SuccessLabel.setVisible(true);
                 clearInputs();
-                ReservationErrorInfoLabel.setText("");
-                addEvent();}
+                ReservationErrorInfoLabel.setText("");}
          else {ReservationErrorInfoLabel.setText("Error Please fill all information");}
         }
 
@@ -518,7 +513,6 @@ public class  ProjectController {
         AdminButtonsHbox.setVisible(true);
     }
 
-
     void HideHomepage() {
         ImagesHbox.setVisible(false);
         ButtonsHbox.setVisible(false);
@@ -613,55 +607,9 @@ public class  ProjectController {
         private boolean isEmpty(TextField textField) {
             return textField.getText() == null || textField.getText().trim().isEmpty();
         }
-
-    String genderConflict(int roomId) {
-        if (Building.equals("Gym")){
-        for (Gym gym : gyms) {
-            if (gym.getFacilityID() == roomId) {
-
-                return gym.getGender();
-            }
-        }
-        return "None";
-    }if (Building.equals("Gym")){
-            for (Gym gym : gyms) {
-                if (gym.getFacilityID() == roomId) {
-
-                    return gym.getGender();
-                }
-            }
-            return "None";}
-        if (Building.equals("Classroom")){
-            for (Classroom classroom : building59_Classrooms) {
-                if (classroom.getRoomNumber() == roomId) {
-
-                    return classroom.getGender();
-                }
-            }
-            return "None";}
-        if (Building.equals("SwimmingPool")){
-            for (SwimmingPool swimmingPool : swimmingPools) {
-                if (swimmingPool.getFacilityID() == roomId) {
-
-                    return swimmingPool.getGender();
-                }
-            }
-            return "None";}
-        else {
-            for (Labs labs : building59_Labs) {
-                if (labs.getLabNumber() == roomId) {
-
-                    return labs.getGender();
-                }
-            }
-            return "None";}
-
-
-
+    public boolean isAdmin(User user) {
+        return user instanceof Admin;
     }
-
-
-
 
 
     ArrayList<User> users1 = new ArrayList<>();
@@ -691,12 +639,6 @@ public class  ProjectController {
                 return user.getType();}}
         return null;
     }
-    public String getUserGender(String username) {
-        for (User user : users1) {
-            if (user.getUserName().equals(username)) {
-                return user.getGender();}}
-        return null;
-    }
 
     ArrayList<Reservation> reservations = new ArrayList<>();
     int i = 1;
@@ -711,7 +653,8 @@ public class  ProjectController {
         Reservation.Event newEvent = new Reservation.Event(i, UsernameLabel.getText(),
                 Integer.parseInt(RoomIDInput.getText()), DateInput.getText(), StartTimeInput.getText(),
                 EndTimeInput.getText(), ReservationReasonInput.getText(),EventNameInput.getText(),
-                Integer.parseInt(RequiredParticipantsInput.getText()), Integer.parseInt(CurrentParticipantsInput.getText()));
+                Integer.parseInt(RequiredParticipantsInput.getText()),
+                Integer.parseInt(CurrentParticipantsInput.getText()));
         events.add(newEvent);
         i++;
     }
