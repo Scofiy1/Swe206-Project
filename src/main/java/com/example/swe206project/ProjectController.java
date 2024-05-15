@@ -471,29 +471,37 @@ public class  ProjectController {
 
                 if (checkEventInfo()) {
                     try {
-                        if(addEvent()){
+                        if(checkRoomCapacity()){
+                            int currentParticipants = Integer.parseInt(CurrentParticipantsInput.getText());
+                            int requiredParticipants = Integer.parseInt(RequiredParticipantsInput.getText());
+                            if(checkEventCapacity(currentParticipants,requiredParticipants)){
 
-                        int currentParticipants = Integer.parseInt(CurrentParticipantsInput.getText());
-                        int requiredParticipants = Integer.parseInt(RequiredParticipantsInput.getText());
-                        if(checkEventCapacity(currentParticipants,requiredParticipants)) {
-                            if (isAdmin) {
-                                AdminHomepage();
-                            } else {
-                                Homepage();
+
+                                if(addEvent()) {
+                                    if (isAdmin) {
+                                        AdminHomepage();
+                                    } else {
+                                        Homepage();
+                                    }
+                                    SuccessLabel.setVisible(true);
+
+                                    clearInputs();
+                                }
+                                else{
+                                    ReservationErrorInfoLabel.setText("Error! Gender Conflict");
+                                }
+                                ReservationErrorInfoLabel.setText("");}
+                            else {
+                                ReservationErrorInfoLabel.setText("Required Participants cant be lower or equal to Current Participants");
+
                             }
-                            SuccessLabel.setVisible(true);
-
-                            clearInputs();
-                        }
+                    }
                         else{
-                            ReservationErrorInfoLabel.setText("Error! Gender Conflict");
+                            ReservationErrorInfoLabel.setText("Required Participants or Current Participants cannot be higher than room capacity");
                         }
-                        ReservationErrorInfoLabel.setText("");}
-                        else {
-                            ReservationErrorInfoLabel.setText("Required Participants cant be lower or equal to Current Participants");
+                    }
 
-                        }
-                    }catch(NumberFormatException e){
+                    catch(NumberFormatException e){
                         ReservationErrorInfoLabel.setText("Please enter integers for current and required participants");
 
                     }
@@ -936,7 +944,16 @@ public class  ProjectController {
         }
         else return false;
     }
-
+    public boolean checkRoomCapacity(){
+        for(Facilities facilities: roomsIDs){
+            if(facilities.getFacilityID()==Integer.parseInt(RoomIDInput.getText())){
+                if((facilities.getCapacity()>=Integer.parseInt(RequiredParticipantsInput.getText()))||facilities.getCapacity()>=Integer.parseInt(CurrentParticipantsInput.getText())){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     ArrayList<Reservation.Event> events = new ArrayList<>();
     public boolean addEvent() {
         boolean checkGender = getRoomGenderUsingRoomID();
