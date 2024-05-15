@@ -177,16 +177,19 @@ public class  ProjectController {
 
     @FXML
     void JoinButtonClick(ActionEvent event) {
+
         try {
+
             int inputReservationID = Integer.parseInt(JoinEventInput.getText());
             boolean eventFound = false;
-
             for (Reservation.Event event2 : events) {
                 if (event2.getReservationID() == inputReservationID) {
                     eventFound = true;
+                    if (getRoomGenderUsingReservationID()){
 
                     if (event2.JoinEventCheck()) {
                         SuccessLabel.setText("You have registered in an event!");
+
 
 
                         if (isAdmin) {
@@ -208,6 +211,7 @@ public class  ProjectController {
                             SuccessLabel.setVisible(true);
                         }
                     }
+
                     break;
                 }
             }
@@ -224,6 +228,18 @@ public class  ProjectController {
                     SuccessLabel.setVisible(true);
                 }
             }
+            else {SuccessLabel.setText("Error! Gender Conflict");}
+
+
+
+                if (isAdmin) {
+                    AdminHomepage();
+                    SuccessLabel.setVisible(true);
+                } else {
+                    Homepage();
+                    SuccessLabel.setVisible(true);
+                }}
+
         } catch (NumberFormatException e) {
             SuccessLabel.setText("Please enter a valid event ID.");
 
@@ -291,11 +307,14 @@ public class  ProjectController {
     }
     public boolean getRoomGenderUsingReservationID(){
         int reservationId = Integer.parseInt(JoinEventInput.getText());
-        for(Reservation reservation: reservations){
+
+        for(Reservation.Event reservation: events){
             if(reservation.getReservationID()==reservationId){
+
                 for(Facilities facility: roomsIDs){
                     if(facility.getFacilityID()==reservation.getReservationRoomID()){
-                        if((facility.getGender().equals(getGender()))||facility.getGender().equals("None")){
+
+                        if((facility.getGender().equals(getUserGender(UsernameLabel.getText())))||facility.getGender().equals("None")){
                             return true;
                         }
                     }
@@ -346,12 +365,13 @@ public class  ProjectController {
     @FXML
     void JoinReservationEventButtonClick(ActionEvent event) {
         HideHomepage();
+        rMail.setVisible(false);
         JoinEventPage.setVisible(true);
         CancelButton.setVisible(false);
         JoinButton.setVisible(true);
         JoinButton.setText("Join Event");
         EnterEventLabel.setText("Enter the ID of the Event you Would like to Join");
-        SuccessLabel.setText("You have Successfully Joined an Event");
+
 
     }
 
@@ -374,6 +394,7 @@ public class  ProjectController {
     }
     @FXML
     void CancelReservationButtonClick(ActionEvent event) {
+        rMail.setVisible(true);
         JoinEventPage.setVisible(true);
         HideHomepage();
         JoinButton.setText("Cancel Reservation");
@@ -484,20 +505,20 @@ public class  ProjectController {
                                         Homepage();
                                     }
                                     SuccessLabel.setVisible(true);
-
+                                    ReservationErrorInfoLabel.setText("");
                                     clearInputs();
                                 }
                                 else{
                                     ReservationErrorInfoLabel.setText("Error! Gender Conflict");
                                 }
-                                ReservationErrorInfoLabel.setText("");}
+                                ReservationErrorInfoLabel.setText("Error! Gender Conflict");}
                             else {
                                 ReservationErrorInfoLabel.setText("Required Participants cant be lower or equal to Current Participants");
 
                             }
                     }
                         else{
-                            ReservationErrorInfoLabel.setText("Required Participants or Current Participants cannot be higher than room capacity");
+                            ReservationErrorInfoLabel.setText("Required or Current Participants cannot be higher than room capacity");
                         }
                     }
 
@@ -519,10 +540,15 @@ public class  ProjectController {
 
 
 
-
+    boolean t;
     @FXML
     void ClassroomButtonClick(ActionEvent event) {
-        if (getUserType(UsernameLabel.getText()).equals("Student"))
+        try{
+        t = getUserType(UsernameLabel.getText()).equals("Student");}
+        catch(Exception e){
+            t = false;
+        }
+        if (t)
         {SuccessLabel.setText("You are not Allowed to Open a Reservation Even for Classrooms or Labs");
             SuccessLabel.setVisible(true);}
         else{
@@ -540,7 +566,12 @@ public class  ProjectController {
 
     @FXML
     void ComputerLabButtonClick(ActionEvent event) {
-        if (getUserType(UsernameLabel.getText()).equals("Student"))
+        try{
+            t = getUserType(UsernameLabel.getText()).equals("Student");}
+        catch(Exception e){
+            t = false;
+        }
+        if (t)
         {SuccessLabel.setText("You are not Allowed to Open a Reservation Even for Classrooms or Labs");
             SuccessLabel.setVisible(true);}
         else{
@@ -920,10 +951,19 @@ public class  ProjectController {
                 return user.getType();}}
         return null;
     }
+    public String getUserGender(String username) {
+        for (User user : users1) {
+            if (user.getUserName().equals(username)) {
+                return user.getGender();}}
+        for (Admin admin : admins)
+            if (admin.getUserName().equals(username)) {
+                return admin.getGender();}
+        return null;
+    }
     public boolean getRoomGenderUsingRoomID(){
         for(Facilities Facility:roomsIDs){
             if (Facility.getFacilityID()==Integer.parseInt(RoomIDInput.getText())){
-                if((getGender().equals(Facility.getGender())||Facility.getGender().equals("None"))){
+                if((getUserGender(UsernameLabel.getText()).equals(Facility.getGender())||Facility.getGender().equals("None"))){
                     return true;
                 }
                 else return false;
