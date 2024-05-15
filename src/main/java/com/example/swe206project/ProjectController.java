@@ -24,7 +24,6 @@ public class  ProjectController {
     @FXML
     private ImageView AccountIcon;
 
-
     @FXML
     private TextField CurrentParticipantsInput;
     @FXML
@@ -154,6 +153,8 @@ public class  ProjectController {
 
     private ImageView GymImage;
     @FXML
+    private Button CancelButton;
+    @FXML
 
     private ImageView LabImage;
     @FXML
@@ -165,11 +166,13 @@ public class  ProjectController {
     private TextField JoinEventInput;
     @FXML
     private Label EventLabel;
+    @FXML
+    private Label AllEventLabel;
 
     @FXML
     void JoinButtonClick(ActionEvent event) {
         SuccessLabel.setText("You have registered in an event!");
-        JoinEventPage.setVisible(false);
+
         if (isAdmin){
             AdminHomepage();
         }
@@ -177,6 +180,41 @@ public class  ProjectController {
         Homepage();
 
     }
+    String text = "";
+    @FXML
+    void CancelButtonClick(ActionEvent event) {
+
+        try {
+            int reservationId = Integer.parseInt(JoinEventInput.getText());
+
+            if (removeReservationById(reservationId)) {
+                text ="You have Cancelled a Reservation";
+            } else {
+               text ="No reservation exists with that ID";
+            }
+
+                if (isAdmin) {
+                    AdminHomepage();
+                } else {
+                    Homepage();
+
+                }
+                SuccessLabel.setText(text);
+                SuccessLabel.setVisible(true);
+                JoinEventInput.setText("");
+
+        }catch (NumberFormatException e) {
+
+            if (isAdmin) {
+                AdminHomepage();
+            } else {
+                Homepage();
+            }
+            SuccessLabel.setText("Invalid input. Please enter a valid reservation ID");
+            SuccessLabel.setVisible(true);
+            JoinEventInput.setText("");
+
+        }}
 
     @FXML
     void MakeReservationButtonClick(ActionEvent event) {
@@ -203,32 +241,42 @@ public class  ProjectController {
     void JoinReservationEventButtonClick(ActionEvent event) {
         HideHomepage();
         JoinEventPage.setVisible(true);
+        CancelButton.setVisible(false);
+        JoinButton.setVisible(true);
         JoinButton.setText("Join Event");
-        EnterEventLabel.setText("Enter the Name of the Event you Would like to Join");
+        EnterEventLabel.setText("Enter the ID of the Event you Would like to Join");
         SuccessLabel.setText("You have Successfully Joined an Event");
+
     }
 
     @FXML
     void ViewAllReservationsButtonClick(ActionEvent event) {
         HideHomepage();
         ViewEventsPage.setVisible(true);
-        for (Reservation reservation : Reservations) {
-            EventLabel.setText(reservation.toString());
-        }
+        AllEventLabel.setVisible(true);
+        EventLabel.setVisible(false);
+        addTextEvent(events);
+        addTextReservation(reservations);
     }
-
+    @FXML
+    void SearchButtonClick(ActionEvent event) {
+        HideHomepage();
+        ViewEventsPage.setVisible(true);
+        AllEventLabel.setVisible(false);
+        EventLabel.setVisible(true);
+        addTextEvent(events);
+    }
     @FXML
     void CancelReservationButtonClick(ActionEvent event) {
         JoinEventPage.setVisible(true);
         HideHomepage();
         JoinButton.setText("Cancel Reservation");
-        EnterEventLabel.setText("Enter the Name of the Event you Would like to Remove");
-        SuccessLabel.setText("You have Cancelled a Reservation");
-        try{
-        Reservations.remove(JoinEventInput.getText());}
-        catch(Exception e){SuccessLabel.setText("No reservation exists with that name");}
+        EnterEventLabel.setText("Enter the ID of the Reservation you Would like to Remove");
+        CancelButton.setVisible(true);
+        JoinButton.setVisible(false);
+        }
 
-    }
+
 
     @FXML
     void HomeButtonClick(ActionEvent event) {
@@ -248,6 +296,8 @@ public class  ProjectController {
         Login();
         ChoicePage.setVisible(false);
         ReservationInfoPage.setVisible(false);
+        ViewEventsPage.setVisible(false);
+        JoinEventPage.setVisible(false);
     }
 
     @FXML
@@ -260,7 +310,8 @@ public class  ProjectController {
             if(checkRegisterInfo()){
                 addUser();
                 UsernameLabel.setText(UsernameInput.getText());
-                Homepage();}
+                Homepage();
+                isAdmin=false;}
             else
                 RegisterErrorLabel.setText("Error Please fill all requested information");
         }
@@ -272,6 +323,7 @@ public class  ProjectController {
         }else if (checkForAdmin(UsernameInput.getText(),PasswordInput.getText())){
                 AdminHomepage();
                 isAdmin = true;
+                UsernameLabel.setText(UsernameInput.getText());
             }
 
         else
@@ -298,8 +350,9 @@ public class  ProjectController {
                 else
                 { Homepage();}
                 SuccessLabel.setVisible(true);
-                clearInputs();
                 ReservationErrorInfoLabel.setText("");
+                addReservation();
+                clearInputs();
             }
             else {ReservationErrorInfoLabel.setText("Error Please fill all information");}
         }
@@ -310,6 +363,7 @@ public class  ProjectController {
             else
             { Homepage();}
                 SuccessLabel.setVisible(true);
+                addEvent();
                 clearInputs();
                 ReservationErrorInfoLabel.setText("");}
          else {ReservationErrorInfoLabel.setText("Error Please fill all information");}
@@ -404,11 +458,11 @@ public class  ProjectController {
 
     public String getType() {
         if (rStudent.isSelected()) {
-            return "Student selected";
+            return "Student";
         } else if (rFaculty.isSelected()) {
-            return "Faculty selected";
+            return "Faculty";
         } else if (rStaff.isSelected()) {
-            return "Staff selected";
+            return "Staff";
         } else {
             return null;
         }
@@ -427,6 +481,7 @@ public class  ProjectController {
             admins.add(new Admin("202034780", "s202034780@kfupm.edu.com", "Male", "1234",  "Admin"));
             admins.add(new Admin("202164610", "s202164610@kfupm.edu.com", "Male", "1234",  "Admin"));
             admins.add(new Admin("202253960", "s202253960@kfupm.edu.com", "Male", "1234",  "Admin"));
+            admins.add(new Admin("admin", "admin@kfupm.edu.com", "Female", "1234",  "Admin"));
 
             //classrooms//
             for(int i = 1; i<=20; i++){
@@ -459,6 +514,19 @@ public class  ProjectController {
             //Sport courts//
             sportCourts.add(new SportCourt(5,"Male", 50));
             sportCourts.add(new SportCourt(6,"Female", 33));
+
+
+            Reservation.Event ev1 = new Reservation.Event(100,"Muhannad",1,"03/01/2024","12:00","15:00","Practice","1",1,1);
+            Reservation res1 = new Reservation(10,"Yousef",2,"02/06/2024","04:00","08:00","Playing");
+            reservations.add(res1);
+            events.add(ev1);
+            addTextEvent(events);
+            addTextReservation(reservations);
+
+            ChoicePage.setVisible(false);
+            ViewEventsPage.setVisible(false);
+            ReservationInfoPage.setVisible(false);
+            JoinEventPage.setVisible(false);
 
         } catch (Exception e) {
             System.out.println("Error loading image: " + e.getMessage());
@@ -560,6 +628,22 @@ public class  ProjectController {
         EventNameInput.clear();
     }
 
+    public void addTextReservation(List<Reservation> reservations) {
+
+        for (Reservation reservation : reservations) {
+            AllEventLabel.setText(AllEventLabel.getText() +"\n"+ reservation.toString());
+        }
+    }
+    public void addTextEvent(List<Reservation.Event> Events) {
+        AllEventLabel.setText("");
+        EventLabel.setText("");
+        for (Reservation.Event event : Events) {
+            AllEventLabel.setText(AllEventLabel.getText() + "\n"+ event.toString() );
+            EventLabel.setText(EventLabel.getText() + "\n"+ event.toString() );
+        }
+    }
+
+
     public boolean findReservation(Reservation Res) {
         for (Reservation reservation : Reservations) {
 
@@ -636,6 +720,15 @@ public class  ProjectController {
         for(Admin admin:admins){
             if(admin.getUserName().equals(username)){
                 return admin.getPassword().equals(password);
+            }
+        }
+        return false;
+    }
+    public boolean removeReservationById(int id) {
+        for (int i = 0; i < reservations.size(); i++) {
+            if (reservations.get(i).getReservationID() == id) {
+                reservations.remove(i);
+                return true;
             }
         }
         return false;

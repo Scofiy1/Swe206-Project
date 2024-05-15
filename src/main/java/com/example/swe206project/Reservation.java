@@ -28,8 +28,8 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return ("Reservation ID: " + reservationID + ", Reserved by: " + username + ", Facility ID: " + facilityID + ", " +
-                "Reservation Date: " + reservationDate + ", From: " + startingTime + " To: " + endingTime + "Reason of reservation: " + reservationReason);
+        return ("ID: " + reservationID + ", Reserved by: " + username + ", Facility ID: " + facilityID + ", " +
+                "Date: " + reservationDate + ", From: " + startingTime + " To: " + endingTime + ", Reason: " + reservationReason);
     }
 
     public int getReservationID(){return reservationID;}
@@ -37,6 +37,7 @@ public class Reservation {
     private String eventName;
     private int requiredParticipants;
     private int currentParticipants;
+    //private string facilityGender;
     public Event(int reservationID, String username, int facilityID, String reservationDate,
                   String startingTime, String endingTime, String reservationReason,
                   String eventName, int requiredParticipants, int currentParticipants) {
@@ -44,6 +45,7 @@ public class Reservation {
          this.eventName = eventName;
          this.requiredParticipants = requiredParticipants;
          this.currentParticipants = currentParticipants;
+         //this.facilityGender = facilityGender;
 
 
      }
@@ -51,8 +53,8 @@ public class Reservation {
 
 
      public void eventInformation(Event event){
-         System.out.println(event + "Event Name: " + eventName + ", Current Participants: " +
-                 currentParticipants + ", Required Participants: " + requiredParticipants);
+         System.out.println(event + "Event Name: " + eventName + ", Current Members: " +
+                 currentParticipants + ", Required Members: " + requiredParticipants);
 
      }
 
@@ -66,7 +68,9 @@ public class Reservation {
 
         @Override
         public String toString() {
-            return super.toString();
+            return super.toString() + ", Event Name: " + eventName +
+                    ", Current Members: " + currentParticipants +
+                    ", Required Members: " + requiredParticipants;
         }
 
         public void openEvent(String eventName){}
