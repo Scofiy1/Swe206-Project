@@ -22,6 +22,8 @@ public class  ProjectController {
     @FXML
     private Button AccountButton;
     @FXML
+    private RadioButton rMail;
+    @FXML
     private RadioButton rMale, rFemale;
     @FXML
     private RadioButton rStudent, rFaculty, rStaff, rClubPresident;
