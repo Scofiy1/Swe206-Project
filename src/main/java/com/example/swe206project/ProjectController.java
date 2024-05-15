@@ -5,11 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.control.*;
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLEncoder;
 
 import java.util.*;
 
@@ -244,7 +239,6 @@ public class  ProjectController {
             int reservationId = Integer.parseInt(JoinEventInput.getText());
 
             if (removeReservationById(reservationId)) {
-                openEmailClient(getEmail(),"Facility Reservation Cancellation", "Dear user,\n\nYour reservation for the facility has been canceled.\n\nBest regards,\nKFUPM Reservation Admins Team");
                 text ="You have Cancelled a Reservation";
             } else {
                text ="No reservation exists with that ID";
@@ -272,50 +266,6 @@ public class  ProjectController {
             JoinEventInput.setText("");
 
         }}
-    public String getEmail(){
-        int reservationId = Integer.parseInt(JoinEventInput.getText());
-        for(Reservation reservation: reservations){
-            if(reservation.getReservationID()==reservationId){
-                for(User user:users1){
-                    if(reservation.getUsername().equals(user.getUserName())){
-                        return user.getEmail();
-                    }
-                }
-            }
-        }
-        return "";
-    }
-    public boolean getRoomGenderUsingReservationID(){
-        int reservationId = Integer.parseInt(JoinEventInput.getText());
-        for(Reservation reservation: reservations){
-            if(reservation.getReservationID()==reservationId){
-                for(Facilities facility: roomsIDs){
-                    if(facility.getFacilityID()==reservation.getReservationRoomID()){
-                        if((facility.getGender().equals(getGender()))||facility.getGender().equals("None")){
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-    private void openEmailClient(String email, String subject, String body) {
-        try {
-            String encodedSubject = URLEncoder.encode(subject, "UTF-8");
-            String encodedBody = URLEncoder.encode(body, "UTF-8");
-            String uriString = String.format("mailto:%s?subject=%s&body=%s", email, encodedSubject, encodedBody);
-            URI mailto = new URI(uriString);
-
-            if (Desktop.isDesktopSupported()) {
-                Desktop.getDesktop().mail(mailto);
-            } else {
-                System.out.println("Desktop is not supported. Please open the following URL manually: " + uriString);
-            }
-        } catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     void MakeReservationButtonClick(ActionEvent event) {
@@ -587,7 +537,6 @@ public class  ProjectController {
             return null;
         }
     }
-
 
     public String getType() {
         if (rStudent.isSelected()) {
@@ -892,10 +841,10 @@ public class  ProjectController {
                 return user.getType();}}
         return null;
     }
-    public boolean getRoomGenderUsingRoomID(){
+    public boolean getRoomGender(){
         for(Facilities Facility:roomsIDs){
             if (Facility.getFacilityID()==Integer.parseInt(RoomIDInput.getText())){
-                if((getGender().equals(Facility.getGender())||Facility.getGender().equals("None"))){
+                if(getGender().equals(Facility.getGender())){
                     return true;
                 }
                 else return false;
@@ -907,7 +856,7 @@ public class  ProjectController {
     int i = 1;
 
     public void addReservation() {
-        boolean checkGender = getRoomGenderUsingRoomID();
+        boolean checkGender = getRoomGender();
         if (checkGender){
             Reservation newReservation = new Reservation(i, UsernameLabel.getText(), Integer.parseInt(RoomIDInput.getText()), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText());
             reservations.add(newReservation);
