@@ -5,6 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.control.*;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
 
 import java.util.*;
 
@@ -239,6 +244,7 @@ public class  ProjectController {
             int reservationId = Integer.parseInt(JoinEventInput.getText());
 
             if (removeReservationById(reservationId)) {
+                openEmailClient(getEmail(),"Your Reservation is Cancelled", "");
                 text ="You have Cancelled a Reservation";
             } else {
                text ="No reservation exists with that ID";
@@ -266,6 +272,35 @@ public class  ProjectController {
             JoinEventInput.setText("");
 
         }}
+    public String getEmail(){
+        int reservationId = Integer.parseInt(JoinEventInput.getText());
+        for(Reservation reservation: reservations){
+            if(reservation.getReservationID()==reservationId){
+                for(User user:users1){
+                    if(reservation.getUsername().equals(user.getUserName())){
+                        return user.getEmail();
+                    }
+                }
+            }
+        }
+        return "";
+    }
+    private void openEmailClient(String email, String subject, String body) {
+        try {
+            String encodedSubject = URLEncoder.encode(subject, "UTF-8");
+            String encodedBody = URLEncoder.encode(body, "UTF-8");
+            String uriString = String.format("mailto:%s?subject=%s&body=%s", email, encodedSubject, encodedBody);
+            URI mailto = new URI(uriString);
+
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().mail(mailto);
+            } else {
+                System.out.println("Desktop is not supported. Please open the following URL manually: " + uriString);
+            }
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void MakeReservationButtonClick(ActionEvent event) {
@@ -537,6 +572,7 @@ public class  ProjectController {
             return null;
         }
     }
+
 
     public String getType() {
         if (rStudent.isSelected()) {
