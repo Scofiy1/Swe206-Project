@@ -555,6 +555,7 @@ public class  ProjectController {
     ArrayList<SwimmingPool> swimmingPools = new ArrayList<>();
     ArrayList<Gym> gyms = new ArrayList<>();
     ArrayList<SportCourt> sportCourts = new ArrayList<>();
+    ArrayList<Facilities> roomsIDs = new ArrayList<>();
 
     public void initialize() {
 
@@ -567,35 +568,47 @@ public class  ProjectController {
 
             //classrooms//
             for(int i = 1; i<=20; i++){
-                building59_Classrooms.add(new Classroom(1000+i, 40, "None"));
+                building59_Classrooms.add(new Classroom(1000+i, "None", 40));
+                roomsIDs.add(new Facilities(1000+i, "None", 40));
             }
             for(int i = 1; i<=10; i++){
-                building59_Classrooms.add(new Classroom(1020+i, 40, "Male"));
+                building59_Classrooms.add(new Classroom(1020+i, "Male", 40));
+                roomsIDs.add(new Facilities(1020+i, "Male", 40));
             }
             for(int i = 1; i<=10; i++){
-                building59_Classrooms.add(new Classroom(1030+i, 40, "Female"));
+                building59_Classrooms.add(new Classroom(1030+i,  "Female",40));
+                roomsIDs.add(new Facilities(1030+i,  "Female",40));
             }
             //labs//
             for(int i = 1; i<=5; i++){
-                building59_Labs.add(new Labs(i, 20, "None"));
+                building59_Labs.add(new Labs(100+i, "None", 20));
+                roomsIDs.add(new Facilities(100+i, "None", 20));
             }
             for(int i = 1; i<=5; i++){
-                building59_Labs.add(new Labs(5+i, 20, "Male"));
+                building59_Labs.add(new Labs(200+i, "Male", 20));
+                roomsIDs.add(new Facilities(200+i, "Male", 20));
             }
             for(int i = 1; i<=5; i++){
-                building59_Labs.add(new Labs(10+i, 20, "Female"));
+                building59_Labs.add(new Labs(300+i, "Female", 20));
+                roomsIDs.add(new Facilities(300+i, "Female", 20));
             }
             //swimming pools//
             swimmingPools.add(new SwimmingPool(1, "Male", 40));
+            roomsIDs.add(new Facilities(1, "Male", 40));
             swimmingPools.add(new SwimmingPool(2, "Female",30 ));
+            roomsIDs.add(new Facilities(2, "Female",30));
 
             //gyms//
             gyms.add(new Gym(3,"Male", 20));
+            roomsIDs.add(new Facilities(3,"Male", 20));
             gyms.add(new Gym(4,"Female", 20));
+            roomsIDs.add(new Facilities(4,"Female", 20));
 
             //Sport courts//
             sportCourts.add(new SportCourt(5,"Male", 50));
+            roomsIDs.add(new Facilities(5,"Male", 50));
             sportCourts.add(new SportCourt(6,"Female", 33));
+            roomsIDs.add(new Facilities(6,"Female", 33));
 
 
             Reservation.Event ev1 = new Reservation.Event(100,"Muhannad",1,"03/01/2024","12:00","15:00","Practice","Football",3,1);
@@ -828,14 +841,28 @@ public class  ProjectController {
                 return user.getType();}}
         return null;
     }
-
+    public boolean getRoomGender(){
+        for(Facilities Facility:roomsIDs){
+            if (Facility.getFacilityID()==Integer.parseInt(RoomIDInput.getText())){
+                if(getGender().equals(Facility.getGender())){
+                    return true;
+                }
+                else return false;
+            }
+        }
+        return false;
+    }
     ArrayList<Reservation> reservations = new ArrayList<>();
     int i = 1;
 
     public void addReservation() {
-        Reservation newReservation = new Reservation(i, UsernameLabel.getText(), Integer.parseInt(RoomIDInput.getText()), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText());
-        reservations.add(newReservation);
-        i++;
+        boolean checkGender = getRoomGender();
+        if (checkGender){
+            Reservation newReservation = new Reservation(i, UsernameLabel.getText(), Integer.parseInt(RoomIDInput.getText()), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText());
+            reservations.add(newReservation);
+            i++;
+        }
+        else
     }
     ArrayList<Reservation.Event> events = new ArrayList<>();
     public void addEvent() {

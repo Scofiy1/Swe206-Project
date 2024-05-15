@@ -43,58 +43,15 @@ class SwimmingPool extends Facilities {
         super(facilityID, gender, capacity);
     }}
 
-class Classroom {
+class Classroom extends Facilities{
 
-
-    private int roomNumber;
-
-    //private String reservationID;
-
-    private int capacity;
-    private String genderRestriction;
-
-    public Classroom(int roomNumber, int capacity, String genderRestriction ) {
-
-        this.roomNumber = roomNumber;
-        this.capacity = capacity;
-        this.genderRestriction = genderRestriction;
-
-    }
-    public String getGender(){return genderRestriction;}
-    public int getRoomNumber(){return roomNumber;}
-    @Override
-    public String toString() {
-        return ("Room Number: " + roomNumber + ", Capacity: " + capacity + ", Gender restriction: " + genderRestriction);
-    }
+    public Classroom(int facilityID, String gender, int capacity) {
+        super(facilityID, gender, capacity);
+    }}
 }
-class Labs {
-    private int LabNumber;
+class Labs extends Facilities{
+    public Labs(int facilityID, String gender, int capacity) {
+        super(facilityID, gender, capacity);
+    }}
 
-    private int capacity;
-
-    private String genderRestriction;
-
-    public Labs(int LabNumber, int capacity, String genderRestriction) {
-        this.LabNumber = LabNumber;
-        this.capacity = capacity;
-        this.genderRestriction = genderRestriction;
-
-    }
-    public String getGender(){return genderRestriction;}
-    public int getLabNumber(){return LabNumber;}
-    @Override
-    public String toString() {
-        if(LabNumber<1000){
-            if(LabNumber<10){
-                return ("Room Number: 000" + LabNumber + ", Capacity: " + capacity + ", Gender restriction: " + genderRestriction);
-            }
-            else {
-                return ("Room Number: 00" + LabNumber + ", Capacity: " + capacity + ", Gender restriction: " + genderRestriction);
-
-            }
-        }
-        else {
-            return ("Room Number: " + LabNumber + ", Capacity: " + capacity + ", Gender restriction: " + genderRestriction);
-        }
-    }
 }
