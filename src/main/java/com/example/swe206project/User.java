@@ -60,6 +60,7 @@ class Admin extends User{
     void viewAllReservations(){}
     void cancelReservation(String reservationID){}
     void sendCancelEmail(){}
+
 }
 class Faculty extends User{
     public Faculty(String userName, String email, String gender, String password, String type) {

@@ -1,5 +1,6 @@
 package com.example.swe206project;
 
+import javafx.event.Event;
 import javafx.scene.layout.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -131,6 +132,7 @@ public class  ProjectController {
     @FXML
     private Label RequiredParticipants;
 
+
     @FXML
     private TextField RoomIDInput;
 
@@ -186,21 +188,41 @@ public class  ProjectController {
                 if (event2.getReservationID() == inputReservationID) {
                     eventFound = true;
                     if (getRoomGenderUsingReservationID()){
+                        if(getUserNameUsingReservationID()){
 
-                    if (event2.JoinEventCheck()) {
-                        SuccessLabel.setText("You have registered in an event!");
+                            if (event2.JoinEventCheck()) {
+
+                                SuccessLabel.setText("You have registered in an event!");
 
 
 
-                        if (isAdmin) {
-                            AdminHomepage();
-                            SuccessLabel.setVisible(true);
-                        } else {
-                            Homepage();
-                            SuccessLabel.setVisible(true);
+                                if (isAdmin) {
+                                    AdminHomepage();
+                                    SuccessLabel.setVisible(true);
                         }
+                                else {
+                                    Homepage();
+                                    SuccessLabel.setVisible(true);
+                        }}
+                        else{
+                                SuccessLabel.setText("The event you tried to join is full");
+
+
+                            if (isAdmin) {
+                                AdminHomepage();
+                                SuccessLabel.setVisible(true);
+                            } else {
+                                Homepage();
+                                SuccessLabel.setVisible(true);
+                            }
+
+
+                            }
+
+
                     } else {
-                        SuccessLabel.setText("The event you tried to join is full");
+                            SuccessLabel.setText("You cannot Join your own event");
+
 
 
                         if (isAdmin) {
@@ -259,10 +281,10 @@ public class  ProjectController {
 
         try {
             int reservationId = Integer.parseInt(JoinEventInput.getText());
-
+            String Email = getEmail();
             if (removeReservationById(reservationId)) {
                 if(rMail.isSelected()) {
-                    openEmailClient(getEmail(), "Facility Reservation Cancellation", "Dear user,\n\nYour reservation for the facility has been canceled.\n\nBest regards,\nKFUPM Reservation Admins Team");
+                    openEmailClient(Email, "Facility Reservation Cancellation", "Dear user,\n\nYour reservation for the facility has been canceled.\n\nBest regards,\nKFUPM Reservation Admins Team");
                     text = "You have Cancelled a Reservation";
                 }
                 else text = "You have Cancelled a Reservation";
@@ -293,6 +315,7 @@ public class  ProjectController {
 
         }}
     public String getEmail(){
+
         int reservationId = Integer.parseInt(JoinEventInput.getText());
         for(Reservation reservation: reservations){
             if(reservation.getReservationID()==reservationId){
@@ -301,9 +324,40 @@ public class  ProjectController {
                         return user.getEmail();
                     }
                 }
+                for(Admin admin : admins){
+                    System.out.println("4");
+                    System.out.println(reservation);
+                    if(reservation.getUsername().equals(admin.getUserName())){
+                        System.out.println("5");
+                        System.out.println(reservation);
+
+                        return admin.getEmail();}}
             }
         }
+        for(Reservation.Event event: events){
+            System.out.println("7");
+            System.out.println(event);
+            if(event.getReservationID()==reservationId){
+
+                for(User user:users1){
+                    System.out.println("71");
+                    System.out.println(event);
+                    if(event.getUsername().equals(user.getUserName())){
+
+                        return user.getEmail();
+                    }
+                }
+                for(Admin admin : admins){
+                    System.out.println("8");
+                    System.out.println(event);
+                    if(event.getUsername().equals(admin.getUserName())){
+                        System.out.println("2");
+                        return admin.getEmail();}}
+            }
+        }
+
         return "";
+
     }
     public boolean getRoomGenderUsingReservationID(){
         int reservationId = Integer.parseInt(JoinEventInput.getText());
@@ -322,6 +376,18 @@ public class  ProjectController {
             }
         }
         return false;
+    }
+    public boolean getUserNameUsingReservationID(){
+        int reservationId = Integer.parseInt(JoinEventInput.getText());
+        for(Reservation.Event reservation: events){
+            if(reservation.getReservationID()==reservationId){
+                if(reservation.getUsername().equals(UsernameLabel.getText())){
+                    return false;
+                        }
+                    }
+                }
+
+        return true;
     }
     private void openEmailClient(String email, String subject, String body) {
         try {
@@ -716,7 +782,7 @@ public class  ProjectController {
 
 
             Reservation.Event ev1 = new Reservation.Event(100,"202253960",1,"03/01/2024","12:00","15:00","Practice","Football",3,1);
-            Reservation res1 = new Reservation(10,"Yousef",2,"02/06/2024","04:00","08:00","Playing");
+            Reservation res1 = new Reservation(10,"202253960",2,"02/06/2024","04:00","08:00","Playing");
             reservations.add(res1);
             events.add(ev1);
             addTextEvent(events);
