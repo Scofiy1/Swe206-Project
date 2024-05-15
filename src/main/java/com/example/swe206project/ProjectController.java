@@ -244,7 +244,7 @@ public class  ProjectController {
             int reservationId = Integer.parseInt(JoinEventInput.getText());
 
             if (removeReservationById(reservationId)) {
-                openEmailClient(getEmail(),"Your Reservation is Cancelled", "");
+                openEmailClient(getEmail(),"Facility Reservation Cancellation", "Dear user,\n\nYour reservation for the facility has been canceled.\n\nBest regards,\nKFUPM Reservation Admins Team");
                 text ="You have Cancelled a Reservation";
             } else {
                text ="No reservation exists with that ID";
@@ -284,6 +284,21 @@ public class  ProjectController {
             }
         }
         return "";
+    }
+    public boolean getRoomGenderUsingReservationID(){
+        int reservationId = Integer.parseInt(JoinEventInput.getText());
+        for(Reservation reservation: reservations){
+            if(reservation.getReservationID()==reservationId){
+                for(Facilities facility: roomsIDs){
+                    if(facility.getFacilityID()==reservation.getReservationRoomID()){
+                        if((facility.getGender().equals(getGender()))||facility.getGender().equals("None")){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
     private void openEmailClient(String email, String subject, String body) {
         try {
@@ -877,10 +892,10 @@ public class  ProjectController {
                 return user.getType();}}
         return null;
     }
-    public boolean getRoomGender(){
+    public boolean getRoomGenderUsingRoomID(){
         for(Facilities Facility:roomsIDs){
             if (Facility.getFacilityID()==Integer.parseInt(RoomIDInput.getText())){
-                if(getGender().equals(Facility.getGender())){
+                if((getGender().equals(Facility.getGender())||Facility.getGender().equals("None"))){
                     return true;
                 }
                 else return false;
@@ -892,7 +907,7 @@ public class  ProjectController {
     int i = 1;
 
     public void addReservation() {
-        boolean checkGender = getRoomGender();
+        boolean checkGender = getRoomGenderUsingRoomID();
         if (checkGender){
             Reservation newReservation = new Reservation(i, UsernameLabel.getText(), Integer.parseInt(RoomIDInput.getText()), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText());
             reservations.add(newReservation);
