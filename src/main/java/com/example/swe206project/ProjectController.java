@@ -325,33 +325,27 @@ public class  ProjectController {
                     }
                 }
                 for(Admin admin : admins){
-                    System.out.println("4");
-                    System.out.println(reservation);
+
                     if(reservation.getUsername().equals(admin.getUserName())){
-                        System.out.println("5");
-                        System.out.println(reservation);
 
                         return admin.getEmail();}}
             }
         }
         for(Reservation.Event event: events){
-            System.out.println("7");
-            System.out.println(event);
+
             if(event.getReservationID()==reservationId){
 
                 for(User user:users1){
-                    System.out.println("71");
-                    System.out.println(event);
+
                     if(event.getUsername().equals(user.getUserName())){
 
                         return user.getEmail();
                     }
                 }
                 for(Admin admin : admins){
-                    System.out.println("8");
-                    System.out.println(event);
+
                     if(event.getUsername().equals(admin.getUserName())){
-                        System.out.println("2");
+
                         return admin.getEmail();}}
             }
         }
