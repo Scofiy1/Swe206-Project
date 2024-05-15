@@ -5,6 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.control.*;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import java.util.*;
 
@@ -180,6 +184,8 @@ public class  ProjectController {
                     eventFound = true;
 
                     if (event2.JoinEventCheck()) {
+
+
                         SuccessLabel.setText("You have registered in an event!");
 
 
@@ -261,7 +267,7 @@ public class  ProjectController {
             } else {
                 Homepage();
             }
-            SuccessLabel.setText("Invalid input. Please enter a valid reservation ID");
+            SuccessLabel.setText("Please enter a valid reservation ID");
             SuccessLabel.setVisible(true);
             JoinEventInput.setText("");
 
@@ -396,6 +402,7 @@ public class  ProjectController {
     void ConfirmButtonClick(ActionEvent event) {
         if (reservationEventClicked) {
             if (checkReservationInfo()) {
+                if(addReservation()){
                 if (isAdmin) {
                     AdminHomepage();
                 } else {
@@ -403,8 +410,11 @@ public class  ProjectController {
                 }
                 SuccessLabel.setVisible(true);
                 ReservationErrorInfoLabel.setText("");
-                addReservation();
-                clearInputs();
+
+                clearInputs();}
+                else{
+                    ReservationErrorInfoLabel.setText("Error! Gender Conflict");
+                }
             } else {
                 ReservationErrorInfoLabel.setText("Error Please fill all information");
             }
@@ -415,15 +425,21 @@ public class  ProjectController {
                         int currentParticipants = Integer.parseInt(CurrentParticipantsInput.getText());
                         int requiredParticipants = Integer.parseInt(RequiredParticipantsInput.getText());
                         if(checkEventCapacity(currentParticipants,requiredParticipants)){
+                            if (addEvent()){
                         if (isAdmin) {
                             AdminHomepage();
                         } else {
                             Homepage();
                         }
                         SuccessLabel.setVisible(true);
-                        addEvent();
+
                         clearInputs();
                         ReservationErrorInfoLabel.setText("");}
+                        else {
+                            ReservationErrorInfoLabel.setText("Error! Gender Conflict");
+                            }
+                        }
+
                         else {
                             ReservationErrorInfoLabel.setText("Required Participants cant be lower or equal to Current Participants");
 
@@ -474,7 +490,7 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
-        Building = "ComputerLab";
+        Building = "Lab";
         if (reservationEventClicked){
             hide();
         }
@@ -841,6 +857,21 @@ public class  ProjectController {
                 return user.getType();}}
         return null;
     }
+
+    public boolean getReservation(){
+        for(Reservation reservation : Reservations){
+            if (reservation.getReservationID()==Integer.parseInt(JoinEventInput.getText())){
+                for(Facilities Facility:roomsIDs){
+                    if (Facility.getFacilityID()==reservation.getFacilityID());
+                        if(Facility.getGender().equals(getGender())||Facility.getGender().equals("None")){
+                            return true;
+                        }
+                }
+
+            }
+        }
+        return false;
+    }
     public boolean getRoomGender(){
         for(Facilities Facility:roomsIDs){
             if (Facility.getFacilityID()==Integer.parseInt(RoomIDInput.getText())){
@@ -855,24 +886,28 @@ public class  ProjectController {
     ArrayList<Reservation> reservations = new ArrayList<>();
     int i = 1;
 
-    public void addReservation() {
+    public boolean addReservation() {
         boolean checkGender = getRoomGender();
         if (checkGender){
             Reservation newReservation = new Reservation(i, UsernameLabel.getText(), Integer.parseInt(RoomIDInput.getText()), DateInput.getText(), StartTimeInput.getText(), EndTimeInput.getText(), ReservationReasonInput.getText());
             reservations.add(newReservation);
             i++;
+            return true;
         }
-        else
+        else return false;
     }
     ArrayList<Reservation.Event> events = new ArrayList<>();
-    public void addEvent() {
-        Reservation.Event newEvent = new Reservation.Event(i, UsernameLabel.getText(),
-                Integer.parseInt(RoomIDInput.getText()), DateInput.getText(), StartTimeInput.getText(),
-                EndTimeInput.getText(), ReservationReasonInput.getText(),EventNameInput.getText(),
-                Integer.parseInt(RequiredParticipantsInput.getText()),
-                Integer.parseInt(CurrentParticipantsInput.getText()));
-        events.add(newEvent);
-        i++;
-    }
-}
-
+    public boolean addEvent() {
+        boolean checkGender = getRoomGender();
+        if (checkGender){
+            Reservation.Event newEvent = new Reservation.Event(i, UsernameLabel.getText(),
+                    Integer.parseInt(RoomIDInput.getText()), DateInput.getText(), StartTimeInput.getText(),
+                    EndTimeInput.getText(), ReservationReasonInput.getText(),EventNameInput.getText(),
+                    Integer.parseInt(RequiredParticipantsInput.getText()),
+                    Integer.parseInt(CurrentParticipantsInput.getText()));
+            events.add(newEvent);
+            i++;
+            return true;}
+            else
+                return false;
+    }}

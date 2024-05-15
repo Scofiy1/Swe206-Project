@@ -33,6 +33,7 @@ public class Reservation {
     }
 
     public int getReservationID(){return reservationID;}
+
     static public class Event extends Reservation{
     private String eventName;
     private int requiredParticipants;

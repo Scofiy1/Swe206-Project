@@ -48,10 +48,10 @@ class Classroom extends Facilities{
     public Classroom(int facilityID, String gender, int capacity) {
         super(facilityID, gender, capacity);
     }}
-}
+
 class Labs extends Facilities{
     public Labs(int facilityID, String gender, int capacity) {
         super(facilityID, gender, capacity);
     }}
 
-}
+
