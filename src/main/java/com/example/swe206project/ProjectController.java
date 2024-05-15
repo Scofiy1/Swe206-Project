@@ -245,8 +245,11 @@ public class  ProjectController {
             int reservationId = Integer.parseInt(JoinEventInput.getText());
 
             if (removeReservationById(reservationId)) {
-                openEmailClient(getEmail(),"Facility Reservation Cancellation", "Dear user,\n\nYour reservation for the facility has been canceled.\n\nBest regards,\nKFUPM Reservation Admins Team");
-                text ="You have Cancelled a Reservation";
+                if(rMail.isSelected()) {
+                    openEmailClient(getEmail(), "Facility Reservation Cancellation", "Dear user,\n\nYour reservation for the facility has been canceled.\n\nBest regards,\nKFUPM Reservation Admins Team");
+                    text = "You have Cancelled a Reservation";
+                }
+                else text = "You have Cancelled a Reservation";
             } else {
                text ="No reservation exists with that ID";
             }
@@ -673,7 +676,7 @@ public class  ProjectController {
             roomsIDs.add(new Facilities(6,"Female", 33));
 
 
-            Reservation.Event ev1 = new Reservation.Event(100,"Muhannad",1,"03/01/2024","12:00","15:00","Practice","Football",3,1);
+            Reservation.Event ev1 = new Reservation.Event(100,"202253960",1,"03/01/2024","12:00","15:00","Practice","Football",3,1);
             Reservation res1 = new Reservation(10,"Yousef",2,"02/06/2024","04:00","08:00","Playing");
             reservations.add(res1);
             events.add(ev1);
@@ -892,6 +895,12 @@ public class  ProjectController {
         for (int i = 0; i < reservations.size(); i++) {
             if (reservations.get(i).getReservationID() == id) {
                 reservations.remove(i);
+                return true;
+            }
+        }
+        for (int i = 0; i < events.size(); i++) {
+            if (events.get(i).getReservationID() == id) {
+                events.remove(i);
                 return true;
             }
         }
