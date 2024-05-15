@@ -116,6 +116,7 @@
                            </toggleGroup></RadioButton>
                         <RadioButton fx:id="rFaculty" mnemonicParsing="false" text="Faculty" toggleGroup="$Type" />
                         <RadioButton fx:id="rStaff" mnemonicParsing="false" text="Staff" toggleGroup="$Type" />
+                        <RadioButton fx:id="rClubPresident" mnemonicParsing="false" text="Club President" toggleGroup="$Type" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="200.0">
@@ -346,7 +347,7 @@
                   </HBox>
                </children>
             </AnchorPane>
-            <Label fx:id="SuccessLabel" alignment="CENTER" layoutX="258.0" layoutY="661.0" prefWidth="400.0" text="You have Successfully Made a Reservation" visible="false">
+            <Label fx:id="SuccessLabel" alignment="CENTER" layoutX="158.0" layoutY="661.0" prefWidth="600.0" text="You have Successfully Made a Reservation" visible="false">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -370,7 +371,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <AnchorPane fx:id="JoinEventPage" layoutX="137.0" layoutY="196.0" prefHeight="319.0" prefWidth="642.0" style="-fx-background-color: #EAEAEA;">
+            <AnchorPane fx:id="JoinEventPage" layoutX="137.0" layoutY="196.0" prefHeight="319.0" prefWidth="642.0" style="-fx-background-color: #EAEAEA;" visible="false">
                <children>
                   <Button fx:id="JoinButton" layoutX="241.0" layoutY="217.0" mnemonicParsing="false" onAction="#JoinButtonClick" prefHeight="26.0" prefWidth="163.0" text="Join Event" />
                   <Label fx:id="EnterEventLabel" layoutX="96.0" layoutY="72.0" prefHeight="27.0" prefWidth="487.0" text="Enter the ID of the Event you Would like to Join">

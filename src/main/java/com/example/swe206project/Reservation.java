@@ -49,10 +49,20 @@ public class Reservation {
 
 
      }
+        public boolean JoinEventCheck() {
+
+            if (currentParticipants != requiredParticipants) {
+
+                currentParticipants++;
+                return true;
+            } else {
+                return false;
+            }
+        }
 
 
 
-     public void eventInformation(Event event){
+        public void eventInformation(Event event){
          System.out.println(event + "Event Name: " + eventName + ", Current Members: " +
                  currentParticipants + ", Required Members: " + requiredParticipants);
 

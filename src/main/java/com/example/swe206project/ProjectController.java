@@ -20,7 +20,7 @@ public class  ProjectController {
     @FXML
     private RadioButton rMale, rFemale;
     @FXML
-    private RadioButton rStudent, rFaculty, rStaff;
+    private RadioButton rStudent, rFaculty, rStaff, rClubPresident;
     @FXML
     private ImageView AccountIcon;
 
@@ -171,14 +171,65 @@ public class  ProjectController {
 
     @FXML
     void JoinButtonClick(ActionEvent event) {
-        SuccessLabel.setText("You have registered in an event!");
+        try {
+            int inputReservationID = Integer.parseInt(JoinEventInput.getText());
+            boolean eventFound = false;
 
-        if (isAdmin){
-            AdminHomepage();
+            for (Reservation.Event event2 : events) {
+                if (event2.getReservationID() == inputReservationID) {
+                    eventFound = true;
+
+                    if (event2.JoinEventCheck()) {
+                        SuccessLabel.setText("You have registered in an event!");
+
+
+                        if (isAdmin) {
+                            AdminHomepage();
+                            SuccessLabel.setVisible(true);
+                        } else {
+                            Homepage();
+                            SuccessLabel.setVisible(true);
+                        }
+                    } else {
+                        SuccessLabel.setText("The event you tried to join is full");
+
+
+                        if (isAdmin) {
+                            AdminHomepage();
+                            SuccessLabel.setVisible(true);
+                        } else {
+                            Homepage();
+                            SuccessLabel.setVisible(true);
+                        }
+                    }
+                    break;
+                }
+            }
+
+            if (!eventFound) {
+                SuccessLabel.setText("No Event exists with this ID");
+
+
+                if (isAdmin) {
+                    AdminHomepage();
+                    SuccessLabel.setVisible(true);
+                } else {
+                    Homepage();
+                    SuccessLabel.setVisible(true);
+                }
+            }
+        } catch (NumberFormatException e) {
+            SuccessLabel.setText("Invalid input Please enter a valid event ID.");
+
+
+            if (isAdmin) {
+                AdminHomepage();
+                SuccessLabel.setVisible(true);
+            } else {
+                Homepage();
+                SuccessLabel.setVisible(true);
+            }
         }
-        else
-        Homepage();
-
     }
     String text = "";
     @FXML
@@ -228,6 +279,7 @@ public class  ProjectController {
 
     @FXML
     void OpenReservationEventButtonClick(ActionEvent event) {
+
         ChoicePage.setVisible(true);
         HideHomepage();
         ImagesHbox.setVisible(true);
@@ -342,39 +394,65 @@ public class  ProjectController {
 
     @FXML
     void ConfirmButtonClick(ActionEvent event) {
-        if (reservationEventClicked){
-            if(checkReservationInfo()){
-                if (isAdmin){
+        if (reservationEventClicked) {
+            if (checkReservationInfo()) {
+                if (isAdmin) {
                     AdminHomepage();
+                } else {
+                    Homepage();
                 }
-                else
-                { Homepage();}
                 SuccessLabel.setVisible(true);
                 ReservationErrorInfoLabel.setText("");
                 addReservation();
                 clearInputs();
+            } else {
+                ReservationErrorInfoLabel.setText("Error Please fill all information");
             }
-            else {ReservationErrorInfoLabel.setText("Error Please fill all information");}
-        }
-        else {if(checkEventInfo())
-            {if (isAdmin){
-                AdminHomepage();
+        } else {
+
+                if (checkEventInfo()) {
+                    try {
+                        int currentParticipants = Integer.parseInt(CurrentParticipantsInput.getText());
+                        int requiredParticipants = Integer.parseInt(RequiredParticipantsInput.getText());
+                        if(checkEventCapacity(currentParticipants,requiredParticipants)){
+                        if (isAdmin) {
+                            AdminHomepage();
+                        } else {
+                            Homepage();
+                        }
+                        SuccessLabel.setVisible(true);
+                        addEvent();
+                        clearInputs();
+                        ReservationErrorInfoLabel.setText("");}
+                        else {
+                            ReservationErrorInfoLabel.setText("Required Participants cant be lower or equal to Current Participants");
+
+                        }
+                    }catch(NumberFormatException e){
+                        ReservationErrorInfoLabel.setText("Please enter integers for current and required participants");
+
+                    }
+
+                } else {
+                    ReservationErrorInfoLabel.setText("Error Please fill all information");
+
+                }
             }
-            else
-            { Homepage();}
-                SuccessLabel.setVisible(true);
-                addEvent();
-                clearInputs();
-                ReservationErrorInfoLabel.setText("");}
-         else {ReservationErrorInfoLabel.setText("Error Please fill all information");}
         }
 
 
 
-    }
+
+
+
+
 
     @FXML
     void ClassroomButtonClick(ActionEvent event) {
+        if (getUserType(UsernameLabel.getText()).equals("Student"))
+        {SuccessLabel.setText("You are not Allowed to Open a Reservation Even for Classrooms or Labs");
+            SuccessLabel.setVisible(true);}
+        else{
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
@@ -385,10 +463,14 @@ public class  ProjectController {
         else{
         unhide();
         }
-    }
+    }}
 
     @FXML
     void ComputerLabButtonClick(ActionEvent event) {
+        if (getUserType(UsernameLabel.getText()).equals("Student"))
+        {SuccessLabel.setText("You are not Allowed to Open a Reservation Even for Classrooms or Labs");
+            SuccessLabel.setVisible(true);}
+        else{
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
@@ -398,7 +480,7 @@ public class  ProjectController {
         }
         else{
             unhide();
-        }
+        }}
     }
 
     @FXML
@@ -516,7 +598,7 @@ public class  ProjectController {
             sportCourts.add(new SportCourt(6,"Female", 33));
 
 
-            Reservation.Event ev1 = new Reservation.Event(100,"Muhannad",1,"03/01/2024","12:00","15:00","Practice","1",1,1);
+            Reservation.Event ev1 = new Reservation.Event(100,"Muhannad",1,"03/01/2024","12:00","15:00","Practice","Football",3,1);
             Reservation res1 = new Reservation(10,"Yousef",2,"02/06/2024","04:00","08:00","Playing");
             reservations.add(res1);
             events.add(ev1);
@@ -569,6 +651,12 @@ public class  ProjectController {
         RegisterErrorLabel.setText("");
         clearRadioButtons();
     }
+    boolean checkEventCapacity(int currentMembers, int neededMembers){
+        if (currentMembers < neededMembers)
+        return true;
+        else{ReservationErrorInfoLabel.setText("Required Participants cant be lower or equal than current members");
+        return false;}
+    }
 
     void Homepage() {
         MenuBar.setVisible(true);
@@ -602,6 +690,7 @@ public class  ProjectController {
         rStudent.setSelected(false);
         rFaculty.setSelected(false);
         rStaff.setSelected(false);
+        rClubPresident.setSelected(false);
     }
     public void hide(){
         CurrentParticipantsInput.setVisible(false);
@@ -691,7 +780,7 @@ public class  ProjectController {
         if (!rMale.isSelected() && !rFemale.isSelected()) {
             return false;
         }
-        if (!rFaculty.isSelected() && !rStaff.isSelected() && !rStudent.isSelected()) {
+        if (!rFaculty.isSelected() && !rStaff.isSelected() && !rStudent.isSelected() && !rClubPresident.isSelected()) {
             return false;}
         return true;
     }
