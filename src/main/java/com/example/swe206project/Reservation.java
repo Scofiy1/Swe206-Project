@@ -1,8 +1,6 @@
 package com.example.swe206project;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.time.LocalDate;
 public class Reservation {
     private int reservationID;

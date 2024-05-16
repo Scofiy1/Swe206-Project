@@ -1,6 +1,5 @@
 package com.example.swe206project;
 
-import javafx.event.Event;
 import javafx.scene.layout.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -19,9 +18,6 @@ public class  ProjectController {
     ArrayList<Reservation> Reservations = new ArrayList<>();
     private boolean reservationEventClicked = false;
     private boolean isAdmin = false;
-    private String Building = "";
-    @FXML
-    private Button AccountButton;
     @FXML
     private RadioButton rMail;
     @FXML
@@ -616,8 +612,7 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
-        Building = "Classroom";
-        if (reservationEventClicked){
+            if (reservationEventClicked){
         hide();
         }
         else{
@@ -639,8 +634,7 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
-        Building = "Lab";
-        if (reservationEventClicked){
+            if (reservationEventClicked){
             hide();
         }
         else{
@@ -653,7 +647,6 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
-        Building = "SportCourt";
         if (reservationEventClicked){
             hide();
         }
@@ -667,7 +660,6 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
-        Building = "Gym";
         if (reservationEventClicked){
             hide();
         }
@@ -681,7 +673,6 @@ public class  ProjectController {
         ReservationInfoPage.setVisible(true);
         ChoicePage.setVisible(false);
         ImagesHbox.setVisible(false);
-        Building = "SwimmingPool";
         if (reservationEventClicked){
             hide();
         }
