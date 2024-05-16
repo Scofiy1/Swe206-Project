@@ -296,7 +296,7 @@
                   </VBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="ReservationInfoPage" layoutX="104.0" layoutY="231.0" prefHeight="351.0" prefWidth="707.0" style="-fx-background-color: #EAEAEA;">
+            <AnchorPane fx:id="ReservationInfoPage" layoutX="104.0" layoutY="231.0" prefHeight="351.0" prefWidth="707.0" style="-fx-background-color: #EAEAEA;" visible="false">
                <children>
                   <HBox alignment="CENTER" layoutX="-2.0" layoutY="25.0" prefHeight="50.0" prefWidth="707.0">
                      <children>
@@ -327,7 +327,7 @@
                   </HBox>
                   <HBox alignment="CENTER" layoutY="68.0" prefHeight="32.0" prefWidth="707.0">
                      <children>
-                        <Label fx:id="ReservationErrorInfoLabel" alignment="CENTER" prefHeight="18.0" prefWidth="360.0" textFill="#f20707" />
+                        <Label fx:id="ReservationErrorInfoLabel" alignment="CENTER" prefHeight="18.0" prefWidth="454.0" textFill="#f20707" />
                      </children>
                   </HBox>
                   <HBox alignment="TOP_CENTER" layoutY="275.0" prefHeight="50.0" prefWidth="707.0">
@@ -374,7 +374,7 @@
             <AnchorPane fx:id="JoinEventPage" layoutX="137.0" layoutY="196.0" prefHeight="319.0" prefWidth="642.0" style="-fx-background-color: #EAEAEA;" visible="false">
                <children>
                   <Button fx:id="JoinButton" layoutX="241.0" layoutY="217.0" mnemonicParsing="false" onAction="#JoinButtonClick" prefHeight="26.0" prefWidth="163.0" text="Join Event" />
-                  <Label fx:id="EnterEventLabel" layoutX="96.0" layoutY="72.0" prefHeight="27.0" prefWidth="487.0" text="Enter the ID of the Event you Would like to Join">
+                  <Label fx:id="EnterEventLabel" alignment="CENTER" layoutX="41.0" layoutY="72.0" prefHeight="27.0" prefWidth="567.0" text="Enter the ID of the Event you Would like to Join">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
