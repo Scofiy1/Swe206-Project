@@ -557,21 +557,22 @@ public class  ProjectController {
                             int requiredParticipants = Integer.parseInt(RequiredParticipantsInput.getText());
                             if(checkEventCapacity(currentParticipants,requiredParticipants)){
 
+                                boolean checkGender = getRoomGenderUsingRoomID();
+                                if(checkGender) {
+                                    if (addEvent()) {
+                                        if (isAdmin) {
+                                            AdminHomepage();
+                                        } else {
+                                            Homepage();
+                                        }
+                                        SuccessLabel.setVisible(true);
+                                        ReservationErrorInfoLabel.setText("");
+                                        clearInputs();
+                                    } else ReservationErrorInfoLabel.setText("Error! Time Conflict");
+                                }
+                                else ReservationErrorInfoLabel.setText("Error! Gender Conflict");
 
-                                if(addEvent()) {
-                                    if (isAdmin) {
-                                        AdminHomepage();
-                                    } else {
-                                        Homepage();
-                                    }
-                                    SuccessLabel.setVisible(true);
-                                    ReservationErrorInfoLabel.setText("");
-                                    clearInputs();
                                 }
-                                else{
-                                    ReservationErrorInfoLabel.setText("Error! Gender Conflict");
-                                }
-                                ReservationErrorInfoLabel.setText("Error! Gender Conflict");}
                             else {
                                 ReservationErrorInfoLabel.setText("Required Participants cant be lower or equal to Current Participants");
 
@@ -1056,18 +1057,31 @@ public class  ProjectController {
     }
     ArrayList<Reservation.Event> events = new ArrayList<>();
     public boolean addEvent() {
-        boolean checkGender = getRoomGenderUsingRoomID();
-        if (checkGender){
-            Reservation.Event newEvent = new Reservation.Event(i, UsernameLabel.getText(),
-                    Integer.parseInt(RoomIDInput.getText()), DateInput.getText(), StartTimeInput.getText(),
-                    EndTimeInput.getText(), ReservationReasonInput.getText(),EventNameInput.getText(),
-                    Integer.parseInt(RequiredParticipantsInput.getText()),
-                    Integer.parseInt(CurrentParticipantsInput.getText()));
-            events.add(newEvent);
-            i++;
-            return true;}
-        else
-            return false;
+        Reservation.Event newEvent = new Reservation.Event(i, UsernameLabel.getText(),
+                Integer.parseInt(RoomIDInput.getText()), DateInput.getText(), StartTimeInput.getText(),
+                EndTimeInput.getText(), ReservationReasonInput.getText(),EventNameInput.getText(),
+                Integer.parseInt(RequiredParticipantsInput.getText()),
+                Integer.parseInt(CurrentParticipantsInput.getText()));
+            if(!isTimeConflict(newEvent)){
+                events.add(newEvent);
+                i++;
+                return true;
+            }
+            else return false;
+
+
     }
+    public boolean isTimeConflict(Reservation.Event newEvent){
+        for(Reservation.Event event:events){
+            if(newEvent.getReservationRoomID()==event.getReservationRoomID()) {
+                if (newEvent.getDate().equals(event.getDate()) && newEvent.getStartTime().isBefore(event.getEndTime()) && newEvent.getEndTime().isAfter(event.getStartTime())) {
+                    ReservationErrorInfoLabel.setText("Error! Time Conflict");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }
 

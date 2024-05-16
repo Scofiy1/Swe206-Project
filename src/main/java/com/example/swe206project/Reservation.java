@@ -3,7 +3,7 @@ package com.example.swe206project;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
-
+import java.time.LocalDate;
 public class Reservation {
     private int reservationID;
     private String username;
@@ -12,6 +12,8 @@ public class Reservation {
     private String startingTime;
     private String endingTime;
     private String reservationReason;
+    LocalTime startTime, endTime;
+    LocalDate date;
 
     public Reservation(int reservationID, String username, int facilityID, String reservationDate,
                        String startingTime, String endingTime, String reservationReason) {
@@ -22,7 +24,6 @@ public class Reservation {
         this.startingTime = startingTime;
         this.endingTime = endingTime;
         this.reservationReason = reservationReason;
-
 
     }
 
@@ -47,8 +48,9 @@ public class Reservation {
          this.eventName = eventName;
          this.requiredParticipants = requiredParticipants;
          this.currentParticipants = currentParticipants;
-         //this.facilityGender = facilityGender;
-
+         this.startTime = LocalTime.parse(startingTime);
+         this.endTime = LocalTime.parse(endingTime);
+         this.date = LocalDate.parse(reservationDate);
 
      }
         public boolean JoinEventCheck() {
@@ -72,6 +74,15 @@ public class Reservation {
 
 
      public String getEventName(){return eventName;}
+        public LocalTime getStartTime(){
+            return startTime;
+        }
+        public LocalTime getEndTime(){
+            return endTime;
+        }
+        public LocalDate getDate(){
+            return date;
+        }
 
      public int getCurrentParticipants(){return currentParticipants;}
 
