@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 import javafx.event.ActionEvent;
@@ -767,8 +770,8 @@ public class  ProjectController {
             roomsIDs.add(new Facilities(6,"Female", 33));
 
 
-            Reservation.Event ev1 = new Reservation.Event(100,"202253960",1,"03/01/2024","12:00","15:00","Practice","Football",3,1);
-            Reservation res1 = new Reservation(10,"202253960",2,"02/06/2024","04:00","08:00","Playing");
+            Reservation.Event ev1 = new Reservation.Event(100,"202253960",1,"2024-02-11","12:00","15:00","Practice","Football",3,1);
+            Reservation res1 = new Reservation(10,"202253960",2,"2024-06-02","04:00","08:00","Playing");
             reservations.add(res1);
             events.add(ev1);
             addTextEvent(events);
@@ -1053,7 +1056,7 @@ public class  ProjectController {
                 EndTimeInput.getText(), ReservationReasonInput.getText(),EventNameInput.getText(),
                 Integer.parseInt(RequiredParticipantsInput.getText()),
                 Integer.parseInt(CurrentParticipantsInput.getText()));
-            if(!isTimeConflict(newEvent)){
+            if(!isTimeConflict(Integer.parseInt(RoomIDInput.getText()))){
                 events.add(newEvent);
                 i++;
                 return true;
@@ -1062,10 +1065,23 @@ public class  ProjectController {
 
 
     }
-    public boolean isTimeConflict(Reservation.Event newEvent){
+
+    public LocalDate getDateInput() {
+        return LocalDate.parse(DateInput.getText());
+    }
+
+    public LocalTime getStartTimeInput() {
+        return LocalTime.parse(StartTimeInput.getText());
+    }
+
+    public LocalTime getEndTimeInput() {
+        return LocalTime.parse(EndTimeInput.getText());
+    }
+
+    public boolean isTimeConflict(int roomID){
         for(Reservation.Event event:events){
-            if(newEvent.getReservationRoomID()==event.getReservationRoomID()) {
-                if (newEvent.getDate().equals(event.getDate()) && newEvent.getStartTime().isBefore(event.getEndTime()) && newEvent.getEndTime().isAfter(event.getStartTime())) {
+            if(roomID==event.getReservationRoomID()) {
+                if (getDateInput().equals(event.getDate()) && getStartTimeInput().isBefore(event.getEndTime()) && getEndTimeInput().isAfter(event.getStartTime())) {
                     ReservationErrorInfoLabel.setText("Error! Time Conflict");
                     return true;
                 }
